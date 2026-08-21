@@ -160,7 +160,7 @@ export const useBookingFormStore = defineStore('bookingForm', {
 
                 const payload = {
                     serviceId: this.bookingForm.serviceId,
-                    statusId: import.meta.env.PENDING_STATUS_ID,
+                    statusId: import.meta.env.VITE_PENDING_STATUS_ID,
                     bookingDate: this.bookingForm.bookingDate,
                     timeSlotId: this.bookingForm.timeSlotId,
                     fullName: this.bookingForm.fullName,
@@ -210,7 +210,7 @@ export const useBookingFormStore = defineStore('bookingForm', {
                 serviceId: '',
                 bookingDate: '',
                 timeSlotId: '',
-                statusId: import.meta.env.PENDING_STATUS_ID,
+                statusId: import.meta.env.VITE_PENDING_STATUS_ID,
                 fullName: '',
                 email: '',
                 phone: '',

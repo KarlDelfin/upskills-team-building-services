@@ -116,7 +116,13 @@
     </div>
 </template>
 
-<script></script>
+<script lang="ts">
+export default {
+    data() {
+        return {}
+    }
+}
+</script>
 
 <style>
 .privacy_policy_con {}

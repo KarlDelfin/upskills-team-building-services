@@ -67,6 +67,12 @@ export default {
   async mounted() {
     await this.authStore.initAuth()
 
+    if(this.authStore.getUser) {
+      if(this.$route.name === 'Admin') {
+        this.$router.push('/admin/booking')
+      }
+    }
+
     supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_OUT') {
         this.authStore.setUser(null)

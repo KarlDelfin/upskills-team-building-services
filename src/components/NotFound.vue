@@ -1,5 +1,5 @@
 <template>
-<div class="not_found_con">
+<div class="flex justify-center items-center">
   <el-empty
     :image-size="200"
     description="Looks like the page your are looking for does not exist"
@@ -21,5 +21,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

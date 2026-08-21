@@ -80,7 +80,7 @@
               <li>Phone: <a href="tel:09610115585">0961-011-5585</a></li>
             </ul>
             <ul>
-              <li><a href="https://www.facebook.com/hello.upskills"><img src="../src/assets/image/fb.webp" alt="Facebook"></a></li>
+              <li><a href="https://www.facebook.com/hello.upskills" target="_blank"><img src="../src/assets/image/fb.webp" alt="Facebook"></a></li>
             </ul>
           </div>
           <div class="footer_btn_con">
@@ -127,18 +127,30 @@
   </template>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script lang="ts">
 import { gsap } from 'gsap/all';
+
+// @ts-ignore - GSAP utilities are provided as JS and do not have a TS declaration file.
 import { initHeaderAnimations, initFooterAnimations, initMobileMenu } from '@/utils/gsap';
+
 import ChatBot from './components/ChatBot.vue';
 import BookingForm from '@/components/BookingForm.vue';
 
-export default defineComponent({
+import { useTimeSlotStore } from '@/stores/useTimeSlotStore';
+import { useServiceStore } from '@/stores/useServiceStore';
+import { useBookingFormStore } from '@/stores/useBookingFormStore';
+
+export default {
   name: 'App',
   components: {
     ChatBot,
     BookingForm,
+  },
+  setup() {
+    const timeSlotStore = useTimeSlotStore()
+    const serviceStore = useServiceStore()
+    const bookingFormStore = useBookingFormStore()
+    return { timeSlotStore, serviceStore, bookingFormStore }
   },
   data() {
     return {
@@ -155,9 +167,7 @@ export default defineComponent({
     isHomePage() {
       return this.$route.path === '/';
     },
-    isPrivacyPolicyPage() {
-      return this.$route.path === '/privacy-policy';
-    },
+   
     currentYear() {
       return new Date().getFullYear();
     },
@@ -168,14 +178,12 @@ export default defineComponent({
     },
   },
   methods: {
-    handleSelect(index) {
+    handleSelect(index: string) {
       this.activeLink = index;
       localStorage.setItem('activeLink', index);
     },
     openBookingForm() {
-      gsap.fromTo(
-        '#bookingForm',
-        {
+      gsap.fromTo('#bookingForm',{
           opacity: 0,
           y: 300,
         },
@@ -184,13 +192,13 @@ export default defineComponent({
           opacity: 1,
           y: 0,
           ease: 'back.out',
-        }
-      );
+        });
+       
     },
     clear() {
       this.dialog.bookingForm = false;
     },
-    updateActiveLink(path) {
+    updateActiveLink(path: string) {
       if (path === '/') {
         this.activeLink = this.activeLink || 'banner';
         localStorage.setItem('activeLink', this.activeLink);
@@ -201,6 +209,10 @@ export default defineComponent({
     },
   },
   mounted() {
+    /* FOR BOOKING FORM */
+    this.timeSlotStore.fetchTimeSlots()
+    this.serviceStore.fetchServices()
+
     this.updateActiveLink(this.$route.path);
 
     setTimeout(() => {
@@ -211,5 +223,5 @@ export default defineComponent({
       }
     }, 500);
   },
-});
+}
 </script>

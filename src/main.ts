@@ -1,5 +1,5 @@
-import './assets/style.css'
-import './assets/tailwind.css'
+import './assets/css/tailwind.css'
+import './assets/css/style.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -9,22 +9,24 @@ import router from './router'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import 'element-plus/theme-chalk/dark/css-vars.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
+import { useAuthStore } from './stores/useAuthStore'
+import { supabase } from './utils/supabaseClient'
 
 import VCalendar from 'v-calendar'
-import 'v-calendar/style.css'
-
-import { supabase } from './utils/supabaseClient.js'
-
-import '@fortawesome/fontawesome-free/css/all.css'
-
-import { useAuthStore } from './store/useAuthStore'
+import 'v-calendar/style.css';
 
 async function initApp() {
   const app = createApp(App)
+
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
   
   const pinia = createPinia()
   app.use(pinia)
+ 
 
   const authStore = useAuthStore(pinia)
 
@@ -41,7 +43,6 @@ async function initApp() {
     }
   })
 
-  // 5. Mount remaining plugins and app
   app.use(router)
   app.use(ElementPlus)
   app.use(VCalendar, {})

@@ -266,13 +266,13 @@
                     <p class="role">Founder</p>
                     <p class="bio">Yen Camingawan is a Licensed Professional Teacher and Cum Laude graduate with a Bachelor of Secondary Education major in Filipino. A dedicated youth leader and educator, she has served as a summer camp facilitator since 2016 and was appointed Summer Camp Director in 2023. Since then, she has also been mentoring and developing the next generation of facilitators, empowering young leaders through guidance, service, and values-based leadership.</p>
                 </article>
-         
             </div>
         </div>
     </div>
 </template>
 
-<script>
+<script lang="ts">
+// @ts-ignore - GSAP utilities are provided as JS and do not have a TS declaration file.
 import { initHomeAnimations, initSlidesPinning } from '../utils/gsap'
 export default {
     components: {},

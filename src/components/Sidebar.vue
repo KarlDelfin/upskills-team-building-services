@@ -1,31 +1,32 @@
 <template>
-  <div>
-    <!-- Mobile Backdrop Overlay -->
+  <div class="sidebar-container">
     <div
       v-if="isMobile && !isCollapsed"
       class="fixed inset-0 bg-black/50 z-40 md:hidden"
       @click="isCollapsed = true"
     ></div>
 
-    <!-- Responsive Sidebar Container -->
     <el-aside
       :width="isCollapsed ? '64px' : '240px'"
-      class="h-screen flex flex-col bg-[#333] transition-all duration-300 relative z-50 overflow-hidden"
+      class="h-screen flex flex-col bg-[var(--priColor)] transition-all duration-300 relative z-50 overflow-hidden shadow-md"
       :class="{
         'fixed left-0 top-0': isMobile,
       }"
     >
-      <div class="p-4 text-center border-b border-slate-600 flex items-center justify-between min-h-[64px]">
+      <div class="p-4 text-center border-b border-white/10 flex items-center justify-between min-h-[64px]">
         <h2 
           v-show="!isCollapsed" 
-          class="text-white m-0 text-sm md:text-base font-bold tracking-wider uppercase truncate px-2"
+          class="text-[var(--thiColor)] m-0 text-sm md:text-base font-bold tracking-wider uppercase truncate px-2"
         >
-          <a href="/" class="hover:text-[#feb841] transition-colors">Upskills Facilitation</a>
+          <a href="/" class="hover:text-[var(--secColor)] transition-colors">
+            Upskills Team Building Services
+          </a>
         </h2>
 
         <button
           @click="isCollapsed = !isCollapsed"
-          class="text-white hover:text-[#feb841] p-2 rounded-md focus:outline-none mx-auto"
+          class="text-[var(--thiColor)] hover:text-[var(--secColor)] p-2 rounded-md focus:outline-none transition-colors"
+          :class="{ 'mx-auto': isCollapsed }"
           :title="isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'"
         >
           <el-icon :size="20">
@@ -39,12 +40,12 @@
       <el-menu
         :default-active="$route.path"
         router
-        background-color="#333"
-        text-color="#fff"
-        active-text-color="#feb841"
+        background-color="var(--priColor)"
+        text-color="var(--thiColor)"
+        active-text-color="var(--secColor)"
         :collapse="isCollapsed"
         :collapse-transition="false"
-        class="border-none flex-1 overflow-y-auto"
+        class="border-none flex-1 overflow-y-auto sidebar-menu"
       >
         <el-sub-menu index="booking-menu">
           <template #title>
@@ -59,12 +60,12 @@
 
           <el-menu-item index="/admin/status">
             <el-icon><CollectionTag /></el-icon>
-            <template #title>Booking Status</template>
+            <template #title>Statuses</template>
           </el-menu-item>
 
           <el-menu-item index="/admin/timeslot">
             <el-icon><Clock /></el-icon>
-            <template #title>Booking Time Slots</template>
+            <template #title>Time Slots</template>
           </el-menu-item>
         </el-sub-menu>
 
@@ -82,26 +83,8 @@
   </div>
 </template>
 
-<script>
-import { 
-  Calendar, 
-  Notebook, 
-  Clock, 
-  CollectionTag, 
-  Fold, 
-  Expand 
-} from '@element-plus/icons-vue'
-
+<script lang="ts">
 export default {
-  name: 'AdminSidebar',
-  components: {
-    Calendar,
-    Notebook,
-    Clock,
-    CollectionTag,
-    Fold,
-    Expand
-  },
   data() {
     return {
       isCollapsed: false,
@@ -131,13 +114,9 @@ export default {
 </script>
 
 <style scoped>
-/* Smooth Element Plus Menu Collapse Override */
-:deep(.el-menu--collapse) {
-  width: 64px !important;
-}
-
+:deep(.el-menu--collapse) { width: 64px !important; }
 :deep(.el-menu-item .el-icon),
-:deep(.el-sub-menu__title .el-icon) {
-  font-size: 18px;
-}
+:deep(.el-sub-menu__title .el-icon) { font-size: 18px; }
+:deep(.el-menu-item:hover) { background-color: rgba(255, 255, 255, 0.1) !important; color: var(--secColor) !important; }
+:deep(.el-menu-item.is-active) { background-color: rgba(254, 184, 65, 0.15) !important; border-right: 4px solid var(--secColor); font-weight: 600; }
 </style>

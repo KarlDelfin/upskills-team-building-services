@@ -1,7 +1,13 @@
-import { gsap, ScrollTrigger, SplitText, ScrambleTextPlugin, DrawSVGPlugin, MotionPathPlugin } from 'gsap/all'
+import { gsap } from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+import MotionPathPlugin from 'gsap/MotionPathPlugin'
+import SplitText from 'gsap/SplitText'
+import ScrambleTextPlugin from 'gsap/ScrambleTextPlugin'
+import DrawSVGPlugin from 'gsap/DrawSVGPlugin'
+
 import Lenis from 'lenis'
 
-gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin, DrawSVGPlugin, MotionPathPlugin)
+gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin, DrawSVGPlugin, MotionPathPlugin)  
 
 /* LENIS SCROLL */
 const lenis = new Lenis()
@@ -152,7 +158,7 @@ export function initHomeAnimations() {
         scrollTrigger: { 
             trigger: ".gallery_con", 
             start: "top top", 
-            end: "+=5000",
+            end: "+=3000",
             scrub: true, 
             pin: true 
         }
@@ -476,9 +482,3 @@ export function initMobileMenu() {
         }
     });
 }
-
-
-
-
-
-

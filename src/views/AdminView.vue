@@ -1,171 +1,80 @@
 <template>
-  <el-container v-if="user" class="h-screen bg-slate-50 text-slate-800">
-    <AdminSidebar />
+  <div v-if="authStore.loading" class="flex h-screen w-full items-center justify-center bg-slate-50">
+    <div class="flex flex-col items-center gap-3">
+      <div class="h-10 w-10 animate-spin rounded-full border-4 border-slate-300 border-t-sky-600"></div>
+      <p class="text-sm text-slate-500 font-medium">Authenticating, please wait...</p>
+    </div>
+  </div>
 
-    <el-container class="flex flex-col">
-      <el-header class="!flex bg-white border-b border-slate-200 flex justify-end !items-center px-6 h-16">
-        <div class="flex items-center gap-3 justify-between items-center w-full">
-          <h1 class="!text-lg !font-bold">{{ $route.name }}</h1>
-          <el-button 
-            type="danger" 
-            size="small" 
-            plain 
-            @click="handleSignOut"
-          >
-            Sign Out
-          </el-button>
+  <Login v-else-if="!authStore.isAuthenticated" />
+
+  <div v-else class="flex h-screen overflow-hidden">
+    <Sidebar />
+    <div class="flex-1 flex flex-col overflow-y-auto">
+      <el-header class="!flex bg-white border-b justify-end items-center px-6 h-16 shrink-0 !border-b !border-gray-300">
+        <div class="flex items-center justify-between w-full py-2 px-4 bg-white border-b border-slate-200">
+          <h1 class="text-lg font-bold text-slate-800 m-0">Hi, Welcome back!</h1>
+
+          <div class="flex items-center gap-4">
+            <div v-if="authStore.user" class="flex items-center gap-2.5">
+              <img 
+                class="!w-10 !h-10 !rounded-full !object-cover !border !border-slate-200 !shadow-sm" 
+                :src="authStore.user.user_metadata?.avatar_url" 
+                :alt="authStore.user.user_metadata?.name || 'User'"
+              >
+              <div class="flex flex-col">
+                <span class="!text-sm !font-semibold !text-slate-700 !leading-tight">
+                  {{ authStore.user.user_metadata?.name || 'User' }}
+                </span>
+                <span class="!text-xs !text-slate-400">
+                  {{ authStore.user.email }}
+                </span>
+              </div>
+            </div>
+
+            <el-button 
+              type="danger" 
+              size="small" 
+              plain 
+              class="!rounded-md"
+              @click="authStore.handleSignOut()"
+            >
+              Sign Out
+            </el-button>
+          </div>
         </div>
       </el-header>
 
-      <el-main class="p-6 overflow-y-auto bg-slate-50">
+      <main class="flex-1 p-6 overflow-y-auto">
         <RouterView />
-      </el-main>
-    </el-container>
-  </el-container>
-
-  <div v-else class="h-screen w-screen flex justify-center items-center bg-slate-100" v-loading="loading">
-    <el-card class="w-[420px] p-5 rounded-xl text-center border-none" shadow="always">
-      <div class="flex flex-col gap-1 mb-2">
-        <h2 class="text-[#136cb3] text-2xl font-extrabold tracking-wide uppercase m-0">
-          <a href="/">Upskills Facilitation Partners</a>
-        </h2>
-        <p class="text-slate-500 text-xs font-medium m-0">
-          Admin Gateway
-        </p>
-      </div>
-      
-      <el-divider class="my-4" />
-      
-      <div class="mt-6">
-        <el-button 
-          type="primary" 
-          size="large" 
-          class="w-full font-semibold flex items-center justify-center gap-2.5 transition-all duration-200"
-          color="#136cb3" 
-          @click="handleGoogleLogin"
-        >
-          <img 
-            src="https://authjs.dev/img/providers/google.svg" 
-            alt="Google Logo" 
-            class="w-[18px] h-[18px] p-[1px] !mr-1" 
-          />
-          Continue with Google
-        </el-button>
-      </div>
-    </el-card>
+      </main>
+    </div>
   </div>
 </template>
 
-<script>
-import { mapState, mapActions } from 'pinia';
-import { useAuthStore } from '@/store/useAuthStore';
-import AdminSidebar from '@/components/AdminSidebar.vue';
-import { supabase } from '@/utils/supabaseClient';
-import { ElMessage } from 'element-plus';
+<script lang="ts">
+import { supabase } from '@/utils/supabaseClient'
+import { useAuthStore } from '@/stores/useAuthStore'
+import Sidebar from '@/components/Sidebar.vue'
+import Login from '@/components/Login.vue'
 
 export default {
-  name: 'AdminView',
-  components: {
-    AdminSidebar
+  components: { Sidebar, Login },
+  setup() {
+    const authStore = useAuthStore()
+    return { authStore }
   },
-  data() {
-    return {
-      loading: true,
-      isValidating: false
-    };
-  },
-  computed: {
-    // Replaces $store.getters.getUser
-    ...mapState(useAuthStore, ['user'])
-  },
-  methods: {
-    // Replaces this.$store.dispatch('setUser', ...)
-    ...mapActions(useAuthStore, ['setUser']),
+  async mounted() {
+    await this.authStore.initAuth()
 
-    async validateAndSetSession(session) {
-      if (!session || !session.user) {
-        this.setUser(null);
-        this.loading = false;
-        return;
-      }
-      
-      if (this.isValidating) return; 
-
-      const userEmail = session.user.email;
-      this.loading = true;
-      this.isValidating = true;
-
-      try {
-        const { data, error } = await supabase
-          .from('User')
-          .select('email')
-          .eq('email', userEmail)
-          .maybeSingle();
-
-        if (error) throw error;
-
-        if (!data) {
-          ElMessage.error(`Access Denied: ${userEmail} is not authorized.`);
-          this.setUser(null);
-          await supabase.auth.signOut(); 
-          return;
-        }
-
-        this.setUser(session);
-        
-        if (this.$route.path === '/admin' || this.$route.path === '/admin/') {
-          this.$router.push('/admin/booking');
-        }
-      } catch (err) {
-        ElMessage.error(`Authorization engine error: ${err.message}`);
-        this.setUser(null);
-        await supabase.auth.signOut();
-      } finally {
-        this.loading = false;
-        this.isValidating = false;
-      }
-    },
-
-    async handleGoogleLogin() {
-      try {
-        this.loading = true;
-        
-        const REDIRECTION_URL = `${window.location.origin}/admin/booking`;
-
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider: 'google',
-          options: { 
-            redirectTo: REDIRECTION_URL 
-          }
-        });
-        
-        if (error) throw error;
-      } catch (err) {
-        ElMessage.error(`OAuth Initialization failure: ${err.message}`);
-        this.loading = false;
-      }
-    },
-      
-    async handleSignOut() {
-      await supabase.auth.signOut();
-      this.setUser(null); 
-      ElMessage.info('Logged out securely.');
-      this.$router.push('/admin');
-    },
-  }, 
-  mounted() {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      this.validateAndSetSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_OUT') {
-        this.setUser(null);
-        this.loading = false;
-        return;
+        this.authStore.setUser(null)
+        this.authStore.loading = false
+      } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        await this.authStore.initAuth()
       }
-      this.validateAndSetSession(session);
-    });
-  },
+    })
+  }
 }
 </script>

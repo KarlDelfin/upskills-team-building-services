@@ -17,6 +17,42 @@ gsap.ticker.add((time) => {
 })
 gsap.ticker.lagSmoothing(0)
 
+/* LOADER ANIMATION */
+export function initLoaderAnimation(onCompleteCallback) {
+  const tl = gsap.timeline()
+
+  tl.to(".loader_progress_fill", {
+    width: "100%",
+    duration: 1.2,
+    ease: "power2.inOut"
+  })
+  .to(".loader_status", {
+    duration: 0.5,
+    scrambleText: { text: "Website ready", chars: "Upskills Team Building Services" },
+    ease: "none"
+  }, "-=0.4")
+
+  .to(".loader_con", {
+    y: -30,
+    opacity: 0,
+    duration: 0.4,
+    ease: "power2.in"
+  })
+
+  .to("#loader", {
+    yPercent: -100,
+    duration: 0.8,
+    ease: "expo.inOut",
+    onComplete: () => {
+      const loader = document.getElementById("loader")
+      if (loader) {
+        loader.style.setProperty("display", "none", "important")
+      }
+      if (onCompleteCallback) onCompleteCallback()
+    }
+  })
+}
+
 export function initHeaderAnimations() {
     /* HEADER */
     /* let mm = gsap.matchMedia();
@@ -54,9 +90,8 @@ export function initHeaderAnimations() {
         stagger: { each: 0.1 },
     })
 
-    gsap.from('.comp_logo', {
-        y: -200,
-        delay: .5,
+    gsap.to('.comp_logo', {
+        top: '-46px',
     })
     
 }

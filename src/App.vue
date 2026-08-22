@@ -1,4 +1,17 @@
 <template>
+<div id="loader">
+  <div class="loader_con">
+    <h2 class="loader_title">Upskills Team Building Service</h2>
+
+    <!-- Visual Progress Bar -->
+    <div class="loader_progress_bar">
+      <div class="loader_progress_fill"></div>
+    </div>
+
+    <!-- Subtext Readout -->
+    <p class="loader_status">Loading...</p>
+  </div>
+</div>
   <!-- PUBLIC HEADER & NAV (Hidden on /admin routes) -->
   <div 
     v-if="!isAdminRoute" 
@@ -8,9 +21,9 @@
     <!-- HEADER -->
     <header id="header">
       <div class="comp_logo">
-        <RouterLink to="/">
+        <a href="/">
           <img src="@/assets/image/logo.webp" alt="Upskills Facilitation Partners Logo" />
-        </RouterLink>
+        </a>
       </div>
     </header>
 
@@ -131,7 +144,7 @@
 import { gsap } from 'gsap/all';
 
 // @ts-ignore - GSAP utilities are provided as JS and do not have a TS declaration file.
-import { initHeaderAnimations, initFooterAnimations, initMobileMenu } from '@/utils/gsap';
+import { initHeaderAnimations, initFooterAnimations, initMobileMenu, initLoaderAnimation } from '@/utils/gsap';
 
 import ChatBot from './components/ChatBot.vue';
 import BookingForm from '@/components/BookingForm.vue';
@@ -217,9 +230,11 @@ export default {
 
     setTimeout(() => {
       if (!this.isAdminRoute) {
-        initHeaderAnimations();
-        initFooterAnimations();
-        initMobileMenu();
+        initLoaderAnimation(() => {
+          initHeaderAnimations()
+          initMobileMenu()
+          initFooterAnimations()
+        })
       }
     }, 500);
   },

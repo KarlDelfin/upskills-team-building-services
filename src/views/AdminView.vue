@@ -1,8 +1,8 @@
 <template>
-  <div v-if="authStore.loading" class="flex h-screen w-full items-center justify-center bg-slate-50">
-    <div class="flex flex-col items-center gap-3">
-      <div class="h-10 w-10 animate-spin rounded-full border-4 border-slate-300 border-t-sky-600"></div>
-      <p class="text-sm text-slate-500 font-medium">Authenticating, please wait...</p>
+  <div v-if="authStore.loading" class="!flex !h-screen !w-full !items-center !justify-center !bg-slate-50">
+    <div class="!flex !flex-col !items-center !gap-3">
+      <div class="!h-10 !w-10 !animate-spin !rounded-full !border-4 !border-slate-300 !border-t-sky-600"></div>
+      <p class="!text-sm !text-slate-500 !font-medium">Authenticating, please wait...</p>
     </div>
   </div>
 

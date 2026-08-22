@@ -1,126 +1,132 @@
 <template>
-    <div class="privacy_policy_con">
-        <div class="wrapper">
-            <p>Effective Date: <span class="effective_date">July 2025</span></p>
-            
-            <p>This Privacy Policy explains how we collect, use, share, and protect your personal information when you visit our website or use our services. We are committed to safeguarding your data in accordance with internationally recognized privacy principles and applicable laws.</p>
-            <p>This may include general personal information, as well as limited health-related data, such as allergies, symptoms, or other relevant medical information, when necessary to fulfill your request or provide specific services.</p>
-            <p>By using this website, you agree to the collection and use of your information in accordance with this Privacy Policy.</p>
-            
-            <ol type="1" class="privacy_list">
-                <li>
-                    <h2>Information We Collect</h2>
-                    <p>We may collect the following categories of information, depending on the nature of your interaction with our website or the type of form you submit:</p>
-                    <ul class="bullet">
-                        <li>Personal Information: This may include your name, email address, phone number, postal address, and any other information you provide when filling out forms on our website or when contacting us.</li>
-                        <li>Employment and Educational Background: Information related to job applications, such as employment history, resume content, educational qualifications, and references.</li>
-                        <li>Health or Sensitive Information: In certain cases, especially through online forms such as appointment, enrollment, consultation, or other service-related forms, we may collect health-related information, such as allergies, current symptoms, or other medical details that you voluntarily provide. This information is treated as sensitive and is collected solely to fulfill the specific service request.</li>
-                        <li>Usage Information: We may collect information about your interactions with our website and services, such as your IP address, browser type, operating system, and browsing behavior. This data helps us improve our site’s performance and user experience.</li>
-                        <li>Cookies: We use cookies and similar tracking technologies to collect information about your browsing preferences, such as the pages you visit, the links you click, and other actions you take on our website.</li>
-                        <li>Other Information You Voluntarily Provide: Any information you choose to share with us through open-form text fields or uploaded documents.</li>
-                        </ul>
-                    </li>
-                <li>
-                    <h2>How We Use Your Information</h2>
-                    <p><b>Legal Basis for Processing</b></p>
-                    <p>We process personal data based on one or more of the following: your consent, the need to perform a contract or respond to your inquiries, compliance with legal obligations, or our legitimate business interests.</p>
-                    <p>We may use your personal information for the following purposes:</p>
-                    <ul class="bullet">
-                        <li>To communicate with you and respond to your inquiries submitted through our contact forms or other channels.
-                        </li>
-                        <li>To process applications, registrations, reservations, or other service-related requests.</li>
-                        <li>To fulfill the specific service or transaction you initiated through our website.</li>
-                        <li>To send reminders or confirmations about your appointments, submissions, or service status.</li>
-                        <li>To provide and maintain our products and services.</li>
-                        <li>To improve and personalize your experience on our website.</li>
-                        <li>To monitor and analyze website usage and trends.</li>
-                        <li>To send you marketing communications, promotions, and updates if you have provided your consent.</li>
-                        <li>To comply with legal obligations or respond to lawful requests from authorities.</li>
-                        <li>To detect, prevent, and address fraud, abuse, security risks, or technical issues.</li>
-                    </ul>
-                </li>
-                    
-                <li>
-                    <h2>Sharing Your Information</h2>
-                    <p>We do not sell your personal data. However, we may share your information with third parties in the following cases:</p>
-                    <ul class="bullet">
-                        <li>Authorized Personnel or Service Providers: Your information may be accessed by authorized personnel or third-party service providers strictly for the purpose of fulfilling your requests, processing transactions, or maintaining and improving our website and services.</li>
-                        <li>Legal Requirements: We may disclose your information if required by law, such as in response to a court order, legal process, or a request from government authorities.</li>
-                        <li>Third-Party Tools and Analytics: We may use third-party services (e.g., Google Analytics), advertising platforms, or embedded tools that help us understand how visitors interact with our website. These tools may collect information such as IP address, browser type, and page activity, and may use cookies or tracking technologies to perform their functions.</li>
-                    </ul>
-                </li>
-                    
-                <li>
-                    <h2>International Data Transfers</h2>
-                    <p>Your information may be transferred to and processed in countries outside of your own, including locations where our service providers or technical teams operate. These countries may have different data protection standards, but we implement appropriate safeguards to ensure that your information is handled in accordance with applicable privacy laws and internationally recognized data protection principles.</p>
-                </li>
-                    
-                <li>
-                    <h2>Data Security</h2>
-                    <p>We implement appropriate technical and organizational measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction.</p>
-                    <p>Sensitive data, such as health-related information, is subject to additional security controls to help ensure its confidentiality and integrity.</p>
-                    <p>However, no data transmission over the internet can be guaranteed to be completely secure. We encourage you to take appropriate precautions when submitting personal information online.</p>
-                </li>
-                
-                <li>
-                    <h2>Data Breach Notification</h2>
-                    <p>In the event of a data breach that is likely to result in a risk to your rights and freedoms, we will notify affected individuals and regulatory authorities in accordance with applicable data privacy laws. We are committed to acting promptly and transparently to mitigate any impact.</p>
-                </li>
-                
-                <li>
-                    <h2>Sensitive Personal Information</h2>
-                    <p>In some cases, we may collect sensitive personal information to fulfill specific services. This data is collected only, when necessary, with your explicit consent, and is handled in strict accordance with applicable data privacy laws.</p>
-                    <p>It is treated with the highest level of confidentiality and is accessible only to authorized personnel. </p>
-                </li>
-                
-                <li>
-                    <h2>Data Retention</h2>
-                    <p> We retain personal data only as long as necessary to fulfill the purposes outlined in this Privacy Policy, or as required by applicable law.</p>
-                    <p>When personal data is no longer needed, we take appropriate steps to securely delete, anonymize, or de-identify it.</p>
-                </li>
-                    
-                <li>
-                    <h2>Your Rights</h2>
-                    <p>Depending on your location and applicable law, you may have the right to:</p>
-                    <ul class="bullet">
-                        <li>Request access to, correction of, or deletion of your personal information.</li>
-                        <li>Request restriction of processing of your data, subject to legal exceptions.</li>
-                        <li>Withdraw previously granted consent.</li>
-                        <li>Object to or restrict certain uses of your data.</li>
-                        <li>Request a copy of your data in a portable format.</li>
-                        <li>Opt out of receiving promotional communications.</li>
-                    </ul>
-                        <p>To exercise these rights, please contact us using the communication method provided on the website where your data was collected.</p>
-                    </li>
-                
-                    <li>
-                        <h2>Children’s Privacy</h2>
-                        <p>Our website is not intended for use by children under the age of 13 (or the equivalent minimum age under your local laws), unless the website or service is specifically designed for children, such as pediatric care or child-focused programs.</p>
-                        <p>For child-related services, we may collect personal information from minors only when necessary to fulfill a specific service request (e.g., appointment scheduling, enrollment, or medical consultations) and only with verifiable consent from a parent or legal guardian.</p>
-                        <p>For websites or services clearly intended for adults (e.g., 18+ products), individuals under the age of 18 should not submit personal information.</p>
-                        <p>If we become aware that we have collected personal data from a minor without the required consent, we will take appropriate steps to delete the information.</p>
-                    </li>
-                
-                <li>
-                    <h2>Changes to This Privacy Policy</h2>
-                    <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technologies, legal requirements, or for other operational reasons.</p>
-                    <p>Any updates will be posted on this page, and the “Effective Date” at the top of the policy will be updated accordingly. We encourage you to review this policy periodically to stay informed about how we protect your information.</p>
-                </li>
-                
-                <li>
-                    <h2>Contact Us</h2>
-                    <p>If you have any questions, concerns, or requests regarding this Privacy Policy or how your personal information is handled, please contact us using the communication method provided on the website where your data was collected.</p>
-                </li>
-            </ol>
-        </div>
+  <div class="privacy_policy_con">
+    <div class="wrapper">
+      <p>Effective Date: <span class="effective_date">August 2026</span></p>
+
+      <p>
+        This Privacy Policy explains how we collect, use, share, and protect your personal information when you visit our website or use our online appointment booking system. We are committed to safeguarding your personal data in accordance with applicable data privacy laws.
+      </p>
+      
+      <p>
+        By using our website and submitting a booking request, you agree to the collection and use of your information in accordance with this policy.
+      </p>
+
+      <ol type="1" class="privacy_list">
+        <!-- 1. INFORMATION WE COLLECT -->
+        <li>
+          <h2>Information We Collect</h2>
+          <p>When you use our online booking system or interact with our website, we collect the following categories of information:</p>
+          <ul class="bullet">
+            <li>
+              <strong>Personal Identification & Contact Information:</strong> Your full name, email address, and mobile phone number (collected during Step 3 of our booking process).
+            </li>
+            <li>
+              <strong>Booking Details:</strong> Information regarding the specific service you select, along with your preferred booking date and time slot.
+            </li>
+            <li>
+              <strong>Security & Verification Data:</strong> Security token data collected via hCaptcha to prevent spam and automated bot submissions.
+            </li>
+            <li>
+              <strong>Technical & Usage Data:</strong> Automatically collected information such as your IP address, browser type, operating system, and interaction details to optimize performance and prevent abuse.
+            </li>
+          </ul>
+        </li>
+
+        <!-- 2. HOW WE USE YOUR INFORMATION -->
+        <li>
+          <h2>How We Use Your Information</h2>
+          <p><strong>Legal Basis for Processing</strong></p>
+          <p>We process your data based on the necessity to perform contractual or requested services (booking appointments), compliance with legal obligations, and our legitimate business interests in maintaining security.</p>
+          
+          <p>We use your information specifically for the following purposes:</p>
+          <ul class="bullet">
+            <li>To schedule, manage, and confirm your service appointments.</li>
+            <li>To send booking confirmations, status updates, or reminders via SMS or email.</li>
+            <li>To respond to customer support inquiries and process service cancellations.</li>
+            <li>To verify human requests and prevent fraud or automated abuse via hCaptcha.</li>
+            <li>To monitor website performance and improve user experience.</li>
+          </ul>
+        </li>
+
+        <!-- 3. SHARING YOUR INFORMATION -->
+        <li>
+          <h2>Sharing Your Information</h2>
+          <p>We do not sell, rent, or trade your personal information. We only share data with service providers necessary to operate our website and fulfill your booking:</p>
+          <ul class="bullet">
+            <li>
+              <strong>Database & Infrastructure Providers:</strong> Our database services (such as Supabase) store booking records securely to manage your appointments.
+            </li>
+            <li>
+              <strong>Security & Anti-Spam Services:</strong> We integrate third-party tools like hCaptcha to verify legitimate submissions. These services process technical data according to their respective privacy policies.
+            </li>
+            <li>
+              <strong>Legal Requirements:</strong> We may disclose information if required by court orders, subpoena, or relevant law enforcement authorities.
+            </li>
+          </ul>
+        </li>
+
+        <!-- 4. DATA SECURITY -->
+        <li>
+          <h2>Data Security</h2>
+          <p>
+            We implement appropriate technical and organizational measures to safeguard your personal information against unauthorized access, loss, or alteration. All electronic form submissions are encrypted in transit using SSL/TLS encryption.
+          </p>
+          <p>
+            While we apply strict security controls to protect your data, no method of transmission over the internet is completely immune. We recommend taking care when sharing personal details online.
+          </p>
+        </li>
+
+        <!-- 5. DATA RETENTION -->
+        <li>
+          <h2>Data Retention</h2>
+          <p>
+            We retain your personal contact details and appointment history only for as long as necessary to fulfill the requested services, maintain accurate business records, or comply with legal requirements.
+          </p>
+          <p>
+            Once your booking data is no longer required, it is securely deleted or anonymized.
+          </p>
+        </li>
+
+        <!-- 6. YOUR PRIVACY RIGHTS -->
+        <li>
+          <h2>Your Privacy Rights</h2>
+          <p>Depending on your jurisdiction and local laws, you have the right to:</p>
+          <ul class="bullet">
+            <li>Access, correct, or request the deletion of your personal booking details.</li>
+            <li>Request clarification on how your data is being used.</li>
+            <li>Withdraw consent for marketing communications or optional processing.</li>
+          </ul>
+          <p>
+            To exercise any of these rights, please contact us using the contact details or inquiry options available on our website.
+          </p>
+        </li>
+
+        <!-- 7. CHANGES TO THIS POLICY -->
+        <li>
+          <h2>Changes to This Privacy Policy</h2>
+          <p>
+            We may update this Privacy Policy periodically to reflect operational, legal, or regulatory changes. Any modifications will be updated on this page with a revised "Effective Date" at the top.
+          </p>
+        </li>
+
+        <!-- 8. CONTACT US -->
+        <li>
+          <h2>Contact Us</h2>
+          <p>
+            If you have questions, concerns, or requests regarding this Privacy Policy or your personal data, please contact us through the official contact channel provided on our website.
+          </p>
+        </li>
+      </ol>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
 export default {
-    data() {
-        return {}
-    }
+  name: 'PrivacyPolicyView',
+  data() {
+    return {}
+  }
 }
 </script>
 

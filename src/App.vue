@@ -127,7 +127,7 @@
     </footer>
 
     <!-- BACK TO TOP -->
-    <el-backtop :right="32" :bottom="100"/>
+    <el-backtop :right="32" :bottom="100" @click="handleBackTop" />
 
     <!-- CHATBOT -->
     <ChatBot />
@@ -135,7 +135,7 @@
     <!-- BOOKING FORM -->
     <BookingForm />
 
-</template>
+  </template>
 </template>
 
 <script lang="ts">
@@ -189,6 +189,11 @@ export default {
     },
   },
   methods: {
+    handleBackTop() {
+      this.activeLink = 'banner';
+      localStorage.setItem('activeLink', 'banner');
+      this.$router.push('/');
+    },
     handleSelect(index: string) {
       this.activeLink = index;
       localStorage.setItem('activeLink', index);
@@ -217,6 +222,7 @@ export default {
         this.activeLink = '';
         localStorage.removeItem('activeLink');
       }
+      console.log(this.activeLink)
     },
   },
   mounted() {

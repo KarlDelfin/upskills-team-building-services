@@ -1,17 +1,14 @@
 <template>
-<div id="loader">
-  <div class="loader_con">
-    <h2 class="loader_title">Upskills Team Building Service</h2>
-
-    <!-- Visual Progress Bar -->
-    <div class="loader_progress_bar">
-      <div class="loader_progress_fill"></div>
+  <div v-if="!isAdminRoute" :style="isAdminRoute ? 'background: var(--defaultColor)!imporant; color: var(--defaultColor) !imporant' : ''"  id="loader">
+    <div class="loader_con">
+      <h2 class="loader_title">Upskills Team Building Service</h2>
+      <div class="loader_progress_bar">
+        <div class="loader_progress_fill"></div>
+      </div>
+      <p class="loader_status">Loading...</p>
     </div>
-
-    <!-- Subtext Readout -->
-    <p class="loader_status">Loading...</p>
   </div>
-</div>
+  
   <!-- PUBLIC HEADER & NAV (Hidden on /admin routes) -->
   <div 
     v-if="!isAdminRoute" 

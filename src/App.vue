@@ -134,7 +134,8 @@
 
     <!-- BOOKING FORM -->
     <BookingForm />
-  </template>
+
+</template>
 </template>
 
 <script lang="ts">

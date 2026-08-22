@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isAdminRoute"  id="loader">
     <div class="loader_con">
-      <h2 class="loader_title">Upskills Team Building Service</h2>
+      <h2 class="loader_title">Upskills Team Building Services</h2>
       <div class="loader_progress_bar">
         <div class="loader_progress_fill"></div>
       </div>

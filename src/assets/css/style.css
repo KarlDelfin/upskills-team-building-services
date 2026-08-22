@@ -83,7 +83,7 @@ input[type=number] { -moz-appearance: textfield !important; appearance: textfiel
 
 #banner { min-height: 100vh; position: relative; background: var(--bodyColor); }
     .banner_con { position: relative; height: 100vh; overflow: hidden; }
-    .banner_con img { height: 100vh; object-fit: cover; width: 100%; object-position: 50% 0%; opacity: .78; }
+    .banner_con img { height: 100vh; object-fit: cover; width: 100%; object-position: 50% 0%; opacity: .78;  transform: scale(1.2); }
     .banner_con::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,24,28,.15) 0%, rgba(23,24,28,.65) 100%); }
 
     .banner_info { position: absolute; left: 2rem; bottom: 2.5rem; right: 2rem; z-index: 1; }

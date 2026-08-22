@@ -98,8 +98,8 @@ export function initHeaderAnimations() {
 
 export function initHomeAnimations() {
     /* BANNER */
-    gsap.from('.banner_con img', {
-        scale: 1.3,
+    gsap.to('.banner_con img', {
+        scale: 1,
         duration: 3,
         ease: 'power4.out',
     })
@@ -112,6 +112,7 @@ export function initHomeAnimations() {
         opacity: 0,
         ease: 'back.out',
         stagger: { each: 0.1 },
+        delay: 0.8,
     })
     gsap.from('.banner_scroll', {
         opacity: 0,

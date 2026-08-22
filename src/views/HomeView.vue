@@ -271,22 +271,4 @@
     </div>
 </template>
 
-<script lang="ts">
-// @ts-ignore - GSAP utilities are provided as JS and do not have a TS declaration file.
-import { initHomeAnimations, initSlidesPinning } from '../utils/gsap'
-export default {
-    components: {},
-    data(){
-        return{
-            dialog: {
-                bookingForm: false,
-            },
-        }
-    },
-    methods: { },
-    mounted() {
-        initHomeAnimations()
-        initSlidesPinning()
-    },
-}
-</script>
+<script lang="ts"> </script>

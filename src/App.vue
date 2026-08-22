@@ -142,7 +142,7 @@
 import { gsap } from 'gsap/all';
 
 // @ts-ignore - GSAP utilities are provided as JS and do not have a TS declaration file.
-import { initHeaderAnimations, initFooterAnimations, initMobileMenu, initLoaderAnimation } from '@/utils/gsap';
+import { initHomeAnimations, initHeaderAnimations, initFooterAnimations, initMobileMenu, initLoaderAnimation, initSlidesPinning } from '@/utils/gsap';
 
 import ChatBot from './components/ChatBot.vue';
 import BookingForm from '@/components/BookingForm.vue';
@@ -232,15 +232,15 @@ export default {
 
     this.updateActiveLink(this.$route.path);
 
-    setTimeout(() => {
-      if (!this.isAdminRoute) {
-        initLoaderAnimation(() => {
-          initHeaderAnimations()
-          initMobileMenu()
-          initFooterAnimations()
-        })
-      }
-    }, 500);
+    if (!this.isAdminRoute) {
+      initLoaderAnimation(() => {
+        initHomeAnimations()
+        initSlidesPinning()
+        initHeaderAnimations()
+        initMobileMenu()
+        initFooterAnimations()
+      })
+    }
   },
 }
 </script>

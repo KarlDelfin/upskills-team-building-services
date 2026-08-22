@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isAdminRoute" :style="isAdminRoute ? 'background: var(--defaultColor)!imporant; color: var(--defaultColor) !imporant' : ''"  id="loader">
+  <div v-if="!isAdminRoute"  id="loader">
     <div class="loader_con">
       <h2 class="loader_title">Upskills Team Building Service</h2>
       <div class="loader_progress_bar">

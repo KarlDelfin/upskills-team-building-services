@@ -83,15 +83,20 @@ export function initHeaderAnimations() {
         type: 'lines',
     })
 
-    gsap.timeline().from(headerTextsST.lines, {
-        y: 50,
-        opacity: 0,
+    gsap.timeline().to(headerTextsST.lines, {
+        top: '50px',
+        opacity: 1,
         ease: 'back.out',
         stagger: { each: 0.1 },
     })
 
+    gsap.to('.nav ul li a::after', {
+        opacity: 1,
+        ease: 'back.out',
+    })
+
     gsap.to('.comp_logo', {
-        top: '-46px',
+        top: '-50px',
     })
     
 }
@@ -104,15 +109,17 @@ export function initHomeAnimations() {
         ease: 'power4.out',
     })
 
+    gsap.to('.banner_info p', {
+        opacity: 1
+    })
     const bannerTextsST = new SplitText(['.banner_info p'], {
         type: 'lines',
     })
-    gsap.timeline().from(bannerTextsST.lines, {
-        y: 50,
-        opacity: 0,
+    gsap.timeline().to(bannerTextsST.lines, {
+        y: -200,
+        opacity: 1,
         ease: 'back.out',
         stagger: { each: 0.1 },
-        delay: 0.8,
     })
     gsap.from('.banner_scroll', {
         opacity: 0,

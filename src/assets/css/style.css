@@ -179,7 +179,7 @@ input[type=number] { -moz-appearance: textfield !important; appearance: textfiel
 
     .foundational_guiding > div { position: relative; padding-bottom: 3rem; }
     .foundational_guiding > div:last-child { padding-bottom: 0; }
-    .foundational_guiding h2 { font-family: var(--secFont); font-size: 2.25rem; font-weight: 500; margin: 0 0 1rem; position: relative; padding-left: 1.75rem; }
+    .foundational_guiding h2 { font-family: var(--secFont); font-size: clamp(2rem, 5vw, 2.25rem); font-weight: 500; margin: 0 0 1rem; position: relative; padding-left: 1.75rem; }
     .foundational_guiding h2::before { content: ''; position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 12px; height: 12px; border-radius: 50%; }
     
     .mission h2::before { background: var(--bodyColor); }

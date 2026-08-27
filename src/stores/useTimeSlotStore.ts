@@ -21,7 +21,13 @@ export const useTimeSlotStore = defineStore('timeSlot', {
         search: '' as String,
 
         timeSlots: [] as BookingTimeSlot[],
-        timeSlotForm: {} as BookingTimeSlot,
+        timeSlotForm: {
+            id: 0,
+            slotTime: '',
+            isActive: true,
+            dateTimeCreated: '',
+            disabled: false,
+        } as BookingTimeSlot,
 
         dialog: {
             timeSlot: false as Boolean,
@@ -29,7 +35,6 @@ export const useTimeSlotStore = defineStore('timeSlot', {
 
     }),
     actions: {
-        
         /* GET TIME SLOT WITH SEARCH */
         async fetchTimeSlots() {
             try {
@@ -50,11 +55,11 @@ export const useTimeSlotStore = defineStore('timeSlot', {
                 this.timeSlots = data.map((data: BookingTimeSlot) => ({
                     ...data,
                     dateTimeCreated: moment(data.dateTimeCreated).format('LLL'),
-                    slotTime: moment(data.slotTime, 'HH:mm:ss').format('h:mm A'),
+                    slotTime: moment(data.slotTime, 'HH:mm:ss').format('hh:mm A'),
                 })) || []
             }
             catch(error) {
-                console.log(error)
+                console.error(error)
             }
             finally {
                 this.loading = false
@@ -95,7 +100,7 @@ export const useTimeSlotStore = defineStore('timeSlot', {
             try{
                 if(this.title === 'Create Time Slot') {
                   const payload = {
-                      slotTime: this.timeSlotForm.slotTime,
+                      slotTime: moment(this.timeSlotForm.slotTime).format('HH:mm:ss'),
                   }
                   const { error } = await supabase
                   .from('TimeSlot')
@@ -108,7 +113,7 @@ export const useTimeSlotStore = defineStore('timeSlot', {
 
                 if(this.title === 'Edit Time Slot') {
                   const payload = {
-                    slotTime: this.timeSlotForm.slotTime,
+                    slotTime: moment(this.timeSlotForm.slotTime).format('HH:mm:ss'),
                     isActive: this.timeSlotForm.isActive
                   }
                     const { error } = await supabase
@@ -154,17 +159,23 @@ export const useTimeSlotStore = defineStore('timeSlot', {
             if(title == "Created Time Slot") {}
 
             if(title == "Edit Time Slot") {
-                this.timeSlotForm = { ...timeSlot }
+                const todayStr = new Date().toISOString().split('T')[0]; // "2026-08-27"
+                const dateObj = new Date(`${todayStr} ${timeSlot.slotTime}`);
+                this.timeSlotForm = { 
+                    ...timeSlot,
+                    slotTime: dateObj
+                 }
             }
         },
 
         /* CLEAR */
         clear() {
             Object.assign(this.timeSlotForm, {
-                id: undefined,
-                name: '',
-                description: '',
-                price: null,
+                id: '',
+                slotTime: '',
+                isActive: true,
+                dateTimeCreated: '',
+                disabled: '',
             })
             this.dialog.timeSlot = false
         }

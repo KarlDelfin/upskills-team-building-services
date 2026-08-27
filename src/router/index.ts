@@ -60,7 +60,7 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
   const companyName = 'Upskills Team Building Services'
 
   if (to.name === 'Home') {
@@ -69,8 +69,6 @@ router.beforeEach((to, from, next) => {
     const baseTitle = to.meta.title || companyName
     document.title = `${baseTitle} | ${companyName}`
   }
-  
-  next()
 })
 
 

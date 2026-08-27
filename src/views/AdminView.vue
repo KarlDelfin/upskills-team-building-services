@@ -45,7 +45,7 @@
         </div>
       </el-header>
 
-      <main class="flex-1 p-6 overflow-y-auto">
+      <main data-lenis-prevent class="flex-1 p-6 overflow-y-auto">
         <RouterView />
       </main>
     </div>

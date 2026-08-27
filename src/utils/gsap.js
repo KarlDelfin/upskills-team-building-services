@@ -9,13 +9,7 @@ import Lenis from 'lenis'
 
 gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin, DrawSVGPlugin, MotionPathPlugin)  
 
-/* LENIS SCROLL */
-const lenis = new Lenis()
-lenis.on('scroll', ScrollTrigger.update)
-gsap.ticker.add((time) => {
-    lenis.raf(time * 1000)
-})
-gsap.ticker.lagSmoothing(0)
+
 
 /* LOADER ANIMATION */
 export function initLoaderAnimation(onCompleteCallback) {
@@ -55,29 +49,14 @@ export function initLoaderAnimation(onCompleteCallback) {
 
 export function initHeaderAnimations() {
     /* HEADER */
-    /* let mm = gsap.matchMedia();
 
-    mm.add("(min-width: 801px)", () => {
-        ScrollTrigger.create({
-            start: "top top",
-            end: "max",
-            onUpdate: (self) => {
-                if (self.direction === 1) {
-                    gsap.to(".header_con", {
-                        yPercent: -200,
-                        duration: 0.5,
-                        ease: "power2.out"
-                    });
-                } else {
-                    gsap.to(".header_con", {
-                        yPercent: 0,
-                        duration: 0.5,
-                        ease: "power2.out"
-                    });
-                }
-            }
-        });
-    }); */
+    /* LENIS SCROLL */
+    const lenis = new Lenis()
+    lenis.on('scroll', ScrollTrigger.update)
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000)
+    })
+    gsap.ticker.lagSmoothing(0)
 
     const headerTextsST = new SplitText(['header p', 'nav ul li a'], {
         type: 'lines',

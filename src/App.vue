@@ -192,7 +192,10 @@ export default {
     handleBackTop() {
       this.activeLink = 'banner';
       localStorage.setItem('activeLink', 'banner');
-      this.$router.push('/');
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     },
     handleSelect(index: string) {
       this.activeLink = index;
@@ -229,18 +232,19 @@ export default {
     /* FOR BOOKING FORM */
     this.timeSlotStore.fetchTimeSlots()
     this.serviceStore.fetchServices()
-
     this.updateActiveLink(this.$route.path);
 
-    if (!this.isAdminRoute) {
-      initLoaderAnimation(() => {
-        initHomeAnimations()
-        initSlidesPinning()
-        initHeaderAnimations()
-        initMobileMenu()
-        initFooterAnimations()
-      })
-    }
+    setTimeout(() => {
+      if (!this.isAdminRoute) {
+        initLoaderAnimation(() => {
+          initHomeAnimations()
+          initSlidesPinning()
+          initHeaderAnimations()
+          initMobileMenu()
+          initFooterAnimations()
+        })
+      }
+    }, 500)
   },
 }
 </script>

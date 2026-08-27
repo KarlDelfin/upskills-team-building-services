@@ -41,7 +41,7 @@
           <el-table-column label="Time Slot" min-width="160">
             <template #default="scope">
               <span class="font-bold text-slate-800 text-sm">
-                {{ formatTime(scope.row.slotTime) }}
+                {{ scope.row.slotTime }}
               </span>
             </template>
           </el-table-column>
@@ -104,11 +104,10 @@
             >
               <el-time-picker
                 v-model="timeSlotStore.timeSlotForm.slotTime"
-                value-format="HH:mm:ss"
-                format="hh:mm A"
                 placeholder="Select time"
                 class="!w-full"
-              />
+                format="hh:mm A"
+                />
             </el-form-item>
 
             <el-form-item label="Active Status" prop="isActive">
@@ -159,12 +158,6 @@ export default {
             await formEl.validate()
 
             await this.timeSlotStore.submitForm()
-        },
-
-        // Moment.js Formatters
-        formatTime(timeString: string) {
-          if (!timeString) return ''
-          return moment(timeString, 'HH:mm:ss').format('hh:mm A')
         },
     },
     mounted() {

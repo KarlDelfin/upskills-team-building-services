@@ -68,6 +68,10 @@ export const useCalendarStore = defineStore('calendar', {
 
     availableSlots: [] as any[],
 
+    selectedBooking: null as any | null,
+    selectedDateStr: '' as string,
+    selectedBookingId: '' as string,
+
     loading: {
       calendar: false,
       createEvent: false,

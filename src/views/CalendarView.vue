@@ -1,6 +1,5 @@
 <template>
-  <div class="p-3 sm:p-6 bg-white rounded-2xl shadow-lg font-sans w-full min-h-[600px] block">
-    <!-- Parent wrapper with explicit dimensions -->
+  <div class="p-3 sm:p-6 rounded-2xl shadow-lg w-full min-h-[600px] block">
     <div 
       v-loading="calendarStore.loading.calendar" 
       element-loading-text="Loading calendar events..."
@@ -12,103 +11,11 @@
       />
     </div>
 
-    <!-- VIEW BOOKING -->
-    <el-dialog 
-      v-model="calendarStore.dialog.viewEvent" 
-      :title="calendarStore.title" 
-      class="!w-[92vw] sm:!w-[440px] !max-w-[440px]" 
-      center 
-      destroy-on-close
-    >
-      <div v-if="selectedBooking" v-loading="calendarStore.loading.viewEvent" class="!space-y-4 !text-slate-700">
-        <div class="flex items-center justify-between !border-b !border-slate-100 !pb-3">
-          <span class="!font-semibold !text-slate-500 !text-sm">Status</span>
-          <span 
-            class="!px-3 !py-1 !text-xs !font-bold !rounded-full !text-white !shadow-sm"
-            :style="{ backgroundColor: selectedBooking.backgroundColor || '#136cb3' }"
-          >
-            {{ selectedBooking.extendedProps.status }}
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 !gap-2.5 !text-sm !pt-1 items-start sm:items-center">
-          <span class="!text-slate-500 !font-medium">Client / Service:</span>
-          <span class="sm:col-span-2 !font-bold !text-slate-800 !break-words">{{ selectedBooking.title }}</span>
-
-          <span class="!text-slate-500 !font-medium">Scheduled Date:</span>
-          <span class="sm:col-span-2 !font-semibold !text-slate-700 flex flex-col !gap-2 !w-full"> <div>{{ selectedDateFormatted }}</div> </span>
-
-          <span class="!text-slate-500 !font-medium">Email:</span>
-          <span class="sm:col-span-2 !text-slate-700 !break-all">{{ selectedBooking.extendedProps.email || 'N/A' }}</span>
-
-          <span class="!text-slate-500 !font-medium">Phone:</span>
-          <span class="sm:col-span-2 !text-slate-700">{{ selectedBooking.extendedProps.phone || 'N/A' }}</span>
-
-          <span class="!text-slate-500 !font-medium">Participants:</span>
-          <span class="sm:col-span-2 !text-slate-700 !font-semibold">
-            {{ selectedBooking.extendedProps.noOfParticipants }} pax
-          </span>
-        </div>
-      </div>
-
-      <template #footer>
-        <div class="flex justify-end">
-          <el-button class="!w-full sm:!w-auto" @click="calendarStore.dialog.viewEvent = false">Close</el-button>
-          <el-button type="danger" class="!w-full sm:!w-auto" @click="handleDeleteEvent">Delete</el-button>
-        </div>
-      </template>
-    </el-dialog>
-
-    <!-- SCHEDULE BOOKING -->
-    <el-dialog 
-      v-model="calendarStore.dialog.createEvent"
-      :title="calendarStore.title" 
-      class="!w-[92vw] sm:!w-[440px] !max-w-[440px]" 
-      center
-    >
-      <div class="!space-y-4">
-        <p class="!text-sm !text-slate-600">
-          Target Date: <strong class="!text-slate-800">{{ selectedDateFormatted }}</strong>
-        </p>
-
-        <div class="!space-y-2">
-          <label class="block !text-sm !font-medium !text-slate-700">Booking:</label>
-          <el-select 
-            v-model="selectedBookingId" 
-            placeholder="Select a booking" 
-            class="!w-full"
-            size="large"
-            filterable
-            remote
-            :remote-method="calendarStore.searchUnassignedBookings"
-            @change="handleSelectBooking"
-            :loading="calendarStore.loading.unassignedBooking"
-            loading-text="Fetching bookings, please wait..."
-          >
-            <el-option
-              v-for="unassignedBooking in calendarStore.unassignedBookings"
-              :key="unassignedBooking.id"
-              :label="`${unassignedBooking.fullName} - ${unassignedBooking.Service?.name || 'Service'}`"
-              :value="unassignedBooking.id"
-            />
-          </el-select>
-        </div>
-      </div>
-
-      <template #footer>
-        <div class="flex justify-end gap-2">
-          <el-button 
-            type="primary" 
-            color="#136cb3" 
-            :loading="calendarStore.loading.createEvent"
-            :disabled="!selectedBookingId" 
-            @click="handleConfirm"
-          >
-            Confirm
-          </el-button>
-        </div>
-      </template>
-    </el-dialog>
+    <!-- VIEW CALENDAR EVENT -->
+    <ViewEventForm  @refreshCalendar="handleRefreshClick" />
+    
+    <!-- SCHEDULE BOOKING FORM -->
+    <ScheduleBookingForm @refreshCalendar="handleRefreshClick"/>
   </div>
 </template>
 
@@ -123,15 +30,21 @@ import listPlugin from '@fullcalendar/list'
 import rrulePlugin from '@fullcalendar/rrule'
 
 import moment from 'moment'
-import { ElMessage, ElMessageBox } from 'element-plus'
 import { useCalendarStore, type CalendarEvent } from '@/stores/useCalendarStore'
 
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { Edit } from '@element-plus/icons-vue'
+
+import ScheduleBookingForm from '@/components/forms/ScheduleBookingForm.vue'
+import ViewEventForm from '@/components/forms/ViewEventForm.vue'
+
 
 export default {
   name: 'CalendarView',
   components: {
-    FullCalendar
+    FullCalendar,
+    ScheduleBookingForm,
+    ViewEventForm
   },
   setup() {
     const calendarStore = useCalendarStore() 
@@ -141,12 +54,6 @@ export default {
     const vm = this as any
 
     return {
-      selectedDateStr: '',
-      selectedBookingId: '' as string,
-      selectedBooking: null as any,
-      savingReschedule: false,
-      targetDate: '',
-
       calendarOptions: markRaw({
         height: '650px',
         contentHeight: 600,
@@ -186,18 +93,12 @@ export default {
       })
     }
   },
-
   computed: {
     calendarApi(): any {
       return (this.$refs.calendarRef as any) ? (this.$refs.calendarRef as any).getApi() : null
     },
-    selectedDateFormatted(): string {
-      return this.selectedDateStr ? moment(this.selectedDateStr).format('MMMM DD, YYYY') : ''
-    }
   },
   methods: {
-  
-   
     /* CLICK DATE */
     async handleDateClick(info: any) {
       if (new Date(info.dateStr) < new Date(new Date().setHours(0, 0, 0, 0))) {
@@ -206,24 +107,18 @@ export default {
       }
 
       const targetDate = moment(info.dateStr).format('YYYY-MM-DD')
-      this.selectedDateStr = info.dateStr
+      this.calendarStore.selectedDateStr = info.dateStr
       
-      this.calendarStore.calendarEventForm.bookingId = this.selectedBookingId
+      this.calendarStore.calendarEventForm.bookingId = this.calendarStore.selectedBookingId
       this.calendarStore.calendarEventForm.eventDate = targetDate
 
       this.calendarStore.formController('Schedule Booking to Calendar')
     },
 
-    /* SELECT BOOKING */
-    handleSelectBooking(bookingId: string) {
-      this.calendarStore.calendarEventForm.bookingId = bookingId
-    },
-
     /* CLICK EVENT */
     async handleEventClick(info: any) {
-      this.selectedBooking = info.event
-      this.selectedDateStr = info.event.extendedProps.bookingDate
-
+      this.calendarStore.selectedDateStr = info.event.extendedProps.bookingDate
+      this.calendarStore.selectedBooking = info.event
       this.calendarStore.dialog.viewEvent = true
       this.calendarStore.title = 'Booking Event Details'
       this.calendarStore.calendarEventForm.id = info.event.extendedProps.eventId
@@ -256,10 +151,7 @@ export default {
       .finally(() => { })
     },
 
-    async handleDeleteEvent() {
-      await this.calendarStore.handleDeleteEvent()
-      this.handleRefreshClick()
-    },
+    
 
     /* LOAD EVENTS DIRECTLY ON MOUNT */
     async handleDatesSet(dateInfo: any) {
@@ -289,15 +181,6 @@ export default {
         this.calendarOptions.events = this.calendarStore.events
       }
     },
-
-    async handleConfirm() {
-      const ok = this.calendarStore.submitForm()
-      if(await ok) {
-        await this.handleRefreshClick()
-      }
-      this.selectedBookingId = ''
-    },
-
 
     handleTodayClick() { this.calendarApi?.today() },
     handlePrevClick() { this.calendarApi?.prev() },

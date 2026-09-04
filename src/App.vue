@@ -145,7 +145,7 @@ import { gsap } from 'gsap/all';
 import { initHomeAnimations, initHeaderAnimations, initFooterAnimations, initMobileMenu, initLoaderAnimation, initSlidesPinning } from '@/utils/gsap';
 
 import ChatBot from './components/ChatBot.vue';
-import BookingForm from '@/components/BookingForm.vue';
+import BookingForm from '@/components/forms/HomeBookingForm.vue';
 
 import { useTimeSlotStore } from '@/stores/useTimeSlotStore';
 import { useServiceStore } from '@/stores/useServiceStore';

@@ -234,15 +234,7 @@ export const useBookingStore = defineStore('booking', {
         
         if (title === 'Edit Booking' && data) {
           this.bookingForm = {
-            id: data.id || '',
-            serviceId: data.Service?.id || data.serviceId || '',
-            statusId: data.Status?.id || data.statusId || '',
-            timeSlotId: data.timeSlotId || '',
-            bookingDate: data.bookingDate || '',
-            fullName: data.fullName || '',
-            email: data.email || '',
-            phone: data.phone || '',
-            noOfParticipants: data.noOfParticipants || 1
+            ...data
           }
 
           const datePart = moment(data.bookingDate).format('YYYY-MM-DD')
@@ -389,6 +381,8 @@ export const useBookingStore = defineStore('booking', {
           ...slot,
           disabled: bookedTimeSlotIds.has(slot.id)
         }))
+
+        console.log(timeSlotStore.timeSlots)
 
       } catch (error: any) {
         console.error(error)

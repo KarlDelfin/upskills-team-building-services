@@ -117,7 +117,7 @@ export default {
 
     /* CLICK EVENT */
     async handleEventClick(info: any) {
-      this.calendarStore.selectedDateStr = info.event.extendedProps.bookingDate
+      this.calendarStore.selectedDateStr = moment(info.event.extendedProps.bookingDate).format('LL')
       this.calendarStore.selectedBooking = info.event
       this.calendarStore.dialog.viewEvent = true
       this.calendarStore.title = 'Booking Event Details'

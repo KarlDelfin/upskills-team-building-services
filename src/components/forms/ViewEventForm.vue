@@ -2,7 +2,7 @@
     <el-dialog 
       v-model="calendarStore.dialog.viewEvent" 
       :title="calendarStore.title" 
-      class="!w-[92vw] sm:!w-[440px] !max-w-[440px]" 
+      class="!w-[92vw] sm:!w-[440px] !max-w-[440px] !rounded-xl" 
       center 
       destroy-on-close
     >

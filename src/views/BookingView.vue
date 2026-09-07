@@ -127,7 +127,7 @@
             <el-table-column label="Event Details" min-width="180" align="center">
               <template #default="scope">
                 <div class="!text-slate-800 !font-medium !text-sm flex flex-col items-center !gap-1">
-                  <el-button size="small" @click="handleEventClick(scope.row)"><el-icon class="!mr-1"><View /></el-icon>Event Details</el-button>
+                  <el-button size="small" @click="handleEventClick(scope.row)"><el-icon class="!mr-1"><Search /></el-icon>Event Details</el-button>
                 </div>
               </template>
             </el-table-column>
@@ -283,6 +283,7 @@ export default {
     },
 
     async handleEventClick(data: any) {
+      let eventDate = await this.calendarStore.fetchCalendarEventByBookingId(data.id)
       let info = {
         event: {
           title: '' + data.fullName + ' - ' + (data.Service?.name || 'Service'),
@@ -298,16 +299,11 @@ export default {
           }
         }
       }
-      this.calendarStore.selectedDateStr = info.event.extendedProps.bookingDate
+      this.calendarStore.selectedDateStr = eventDate
       this.calendarStore.selectedBooking = info.event
       this.calendarStore.dialog.viewEvent = true
       this.calendarStore.title = 'Booking Event Details'
       this.calendarStore.calendarEventForm.id = info.event.extendedProps.eventId
-
-      console.log(info.event.extendedProps)
-      console.log(info)
-
-      console.log(data)
     },
     
     tableRowClassName({ row }: { row: any }) {

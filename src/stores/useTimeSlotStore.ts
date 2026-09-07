@@ -57,11 +57,9 @@ export const useTimeSlotStore = defineStore('timeSlot', {
                     dateTimeCreated: moment(data.dateTimeCreated).format('LLL'),
                     slotTime: moment(data.slotTime, 'HH:mm:ss').format('hh:mm A'),
                 })) || []
-            }
-            catch(error) {
+            } catch(error) {
                 console.error(error)
-            }
-            finally {
+            } finally {
                 this.loading = false
             }
         },

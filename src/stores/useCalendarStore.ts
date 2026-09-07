@@ -87,6 +87,24 @@ export const useCalendarStore = defineStore('calendar', {
   }),
 
   actions: {
+    async fetchCalendarEventByBookingId(bookingId: string): Promise<string> {
+      this.loading.viewEvent = true
+      try {
+       const { data, error } = await supabase
+        .from('Event')
+        .select('*')
+        .eq('bookingId', bookingId)
+        if (error) throw error
+        return moment(data?.[0]?.eventDate || '').format('LL')
+      } catch (error) {
+        console.error(error)
+        ElMessage.error('Failed to fetch event date.')
+        return 'N/A'
+      } finally {
+        this.loading.viewEvent = false
+      }
+    },
+
     async fetchCalendarEvents(startDate?: string, endDate?: string) {
       this.loading.calendar = true
       if (startDate) this.lastStartDate = startDate
@@ -237,12 +255,10 @@ export const useCalendarStore = defineStore('calendar', {
 
           ElMessage.success('Event scheduled successfully.')
           this.clear()
-          return true
         }
         catch(error) {
           console.log(error)
           ElMessage.error('Failed to schedule event.')
-          return false
         }
         finally {
           this.loading.createEvent = false
@@ -267,11 +283,9 @@ export const useCalendarStore = defineStore('calendar', {
 
           ElMessage.success('Event rescheduled successfully.')
           this.clear()
-          return true
         } catch(error) {
           console.log(error)
           ElMessage.error('Failed to reschedule event.')
-          return false
         } finally {
           this.loading.calendar = false
         }
@@ -322,7 +336,5 @@ export const useCalendarStore = defineStore('calendar', {
         dateTimeCreated: '',
       })
     }
-
-
   }
 })

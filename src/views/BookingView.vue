@@ -127,7 +127,7 @@
             <el-table-column label="Event Details" min-width="180" align="center">
               <template #default="scope">
                 <div class="!text-slate-800 !font-medium !text-sm flex flex-col items-center !gap-1">
-                  <el-button size="small" @click="handleEventClick(scope.row)"><el-icon class="!mr-1"><Search /></el-icon>Event Details</el-button>
+                  <el-button size="small" @click="handleEventClick(scope.row)" type="primary"><el-icon class="!mr-1"><Search /></el-icon>Event Details</el-button>
                 </div>
               </template>
             </el-table-column>

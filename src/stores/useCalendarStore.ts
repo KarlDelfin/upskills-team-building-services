@@ -257,7 +257,7 @@ export const useCalendarStore = defineStore('calendar', {
           this.clear()
         }
         catch(error) {
-          console.log(error)
+          console.error(error)
           ElMessage.error('Failed to schedule event.')
         }
         finally {
@@ -284,7 +284,7 @@ export const useCalendarStore = defineStore('calendar', {
           ElMessage.success('Event rescheduled successfully.')
           this.clear()
         } catch(error) {
-          console.log(error)
+          console.error(error)
           ElMessage.error('Failed to reschedule event.')
         } finally {
           this.loading.calendar = false

@@ -94,7 +94,7 @@
             </ul>
           </div>
           <div class="footer_btn_con">
-            <a class="footer_link cursor-pointer" @click="openBookingForm">Book Now</a>
+            <a class="footer_link cursor-pointer" @click="openBookingForm"><el-icon><Calendar /></el-icon> Book Now</a>
           </div>
         </div>
         <div class="footer_meta">
@@ -225,7 +225,6 @@ export default {
         this.activeLink = '';
         localStorage.removeItem('activeLink');
       }
-      console.log(this.activeLink)
     },
   },
   mounted() {

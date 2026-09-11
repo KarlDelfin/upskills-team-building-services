@@ -81,7 +81,7 @@ export const useStatusStore = defineStore('bookingStatus', {
                 return this.bookingStatuses || []
             }
             catch(error) {
-                console.log(error)
+                console.error(error)
             }
             finally {
                 this.loading = false
@@ -164,7 +164,6 @@ export const useStatusStore = defineStore('bookingStatus', {
 
             if(action == "Edit Status") {
                 this.bookingStatusForm = { ...bookingStatus }
-                console.log(bookingStatus)
             }
         },
 

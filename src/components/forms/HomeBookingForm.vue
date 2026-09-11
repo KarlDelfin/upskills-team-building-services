@@ -62,7 +62,7 @@
           <div class="form_nav">
             <span></span>
             <button class="btn_next" @click="bookingFormStore.goToStep(2, 'next')">
-              Next <i class="fa-solid fa-arrow-right"></i>
+              Next <el-icon><ArrowRightBold /></el-icon>
             </button>
           </div>
         </div>
@@ -94,7 +94,7 @@
                 :disabled="slot.disabled"
                 @click="!slot.disabled && bookingFormStore.handleSelectTime(slot.id)"
               >
-                {{ slot.slotTime }}
+                <el-icon><Clock /></el-icon> {{ slot.slotTime }}
               </button>
             </div>
           </div>
@@ -102,10 +102,10 @@
           <!-- Navigation -->
           <div class="form_nav">
             <button class="btn_back" @click="bookingFormStore.goToStep(1, 'back')">
-              <i class="fa-solid fa-arrow-left"></i> Back
+              <el-icon><ArrowLeftBold /></el-icon> Back
             </button>
             <button class="btn_next" @click="bookingFormStore.goToStep(3, 'next')">
-              Next <i class="fa-solid fa-arrow-right"></i>
+              Next <el-icon><ArrowRightBold /></el-icon>
             </button>
           </div>
         </div>
@@ -114,18 +114,18 @@
         <div v-else class="form_panel">
           <el-form ref="bookingFormRef" label-position="top" :model="bookingFormStore.bookingForm">
             <el-form-item label="Full Name" prop="fullName" :rules="[{ required: true, message: 'Please input full name', trigger: 'blur' }]">
-              <el-input v-model="bookingFormStore.bookingForm.fullName" placeholder="John Doe" size="large" />
+              <el-input v-model="bookingFormStore.bookingForm.fullName" placeholder="John Doe" size="large" :prefix-icon="User" />
             </el-form-item>
 
             <el-form-item label="Email" prop="email" :rules="[ { required: true, message: 'Please input email address', trigger: 'blur' }, { pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, message: 'Please input correct email address', trigger: ['blur', 'change'] } ]">
-              <el-input v-model="bookingFormStore.bookingForm.email" placeholder="johndoe@example.com" size="large" />
+              <el-input v-model="bookingFormStore.bookingForm.email" placeholder="johndoe@example.com" size="large" :prefix-icon="Message"/>
             </el-form-item>
 
             <el-form-item 
               label="Phone"
               prop="phone"
               :rules="[ { required: true, message: 'Please input phone number', trigger: 'blur' }, { pattern: /^09\d{9}$/, message: 'Must be a valid PH mobile number starting with 09', trigger: ['blur', 'change'] } ]">
-              <el-input v-model="bookingFormStore.bookingForm.phone" maxlength="11" placeholder="09XXXXXXXXXX" size="large" />
+              <el-input v-model="bookingFormStore.bookingForm.phone" maxlength="11" placeholder="09XXXXXXXXXX" size="large" :prefix-icon="Phone"/>
             </el-form-item>
 
             <!-- <el-form-item label="Number of Participants" prop="noOfParticipants">
@@ -146,10 +146,10 @@
           <!-- Navigation -->
           <div class="form_nav">
             <button class="btn_back" @click="bookingFormStore.goToStep(2, 'back')">
-              <i class="fa-solid fa-arrow-left"></i> Back
+              <el-icon><ArrowLeftBold /></el-icon> Back
             </button>
             <button class="btn_submit" :disabled="bookingFormStore.loading" @click="handleConfirm">
-              Confirm Booking <i class="fa-solid fa-check"></i>
+              Confirm Booking <el-icon><Check /></el-icon>
             </button>
           </div>
         </div>
@@ -160,24 +160,32 @@
 
 <script lang="ts">
 import VueHcaptcha from '@hcaptcha/vue3-hcaptcha';
-import { supabase } from '@/utils/supabaseClient';
-import { ElMessage } from 'element-plus';
-import gsap from 'gsap';
-import moment from 'moment';
 import { useTimeSlotStore } from '@/stores/useTimeSlotStore';
 import { useServiceStore } from '@/stores/useServiceStore';
 import { useBookingFormStore } from '@/stores/useBookingFormStore';
+import { User, Message, Phone } from '@element-plus/icons-vue'
 
 export default {
   components: {
-    VueHcaptcha
+    VueHcaptcha,
+    User,
+    Message,
+    Phone
   },
 
   setup() {
     const timeSlotStore = useTimeSlotStore()
     const serviceStore = useServiceStore()
     const bookingFormStore = useBookingFormStore()
-    return { timeSlotStore, serviceStore, bookingFormStore }
+
+    return {
+      timeSlotStore,
+      serviceStore,
+      bookingFormStore,
+      User,
+      Message,
+      Phone
+    }
   },
 
   data() {
@@ -236,12 +244,14 @@ export default {
 
 .time_buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
 .time_btn { padding: 8px 16px; border: 1px solid #ccc; border-radius: 5px; background: #f9f9f9; cursor: pointer; transition: 0.2s;width: 19%; }
+.time_btn i {top: 2px}
 .time_btn.active { background: var(--priColor); color: #fff; }
 .time_btn.active:hover {background: var(--secColor); }
 .time_btn:hover { background: #e9e9e9; }
 .time_btn.disabled { color: #7f8c8d; opacity: 0.6; cursor: not-allowed; background-color: #ccc; }
 
 .form_nav {display:flex; justify-content:space-between; align-items:center; margin-top:30px; border-top:1px solid #eee; padding-top:24px;}
+.form_nav i {top: 3px}
 .form_nav button:hover { background:var(--secColor); transition:all .3s ease; color:var(--defaultColor);}
 .btn_back, .btn_next, .btn_submit {padding:12px 28px; border-radius:8px; font-weight:700; cursor:pointer; border:none; font-size:.95rem;}
 .btn_back {background:var(--defaultColor); color:var(--bodyColor); border:1px solid #ddd;}

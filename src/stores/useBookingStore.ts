@@ -363,7 +363,6 @@ export const useBookingStore = defineStore('booking', {
           highlight: { backgroundColor: '#ff8080' },
           dates: day.date instanceof Date ? day.date : new Date(day.date)
         }]
-        
         const startOfDay = selected.format('YYYY-MM-DD 00:00:00')
         const endOfDay = selected.clone().endOf('day').format('YYYY-MM-DD 23:59:59')
         
@@ -381,8 +380,6 @@ export const useBookingStore = defineStore('booking', {
           ...slot,
           disabled: bookedTimeSlotIds.has(slot.id)
         }))
-
-        console.log(timeSlotStore.timeSlots)
 
       } catch (error: any) {
         console.error(error)

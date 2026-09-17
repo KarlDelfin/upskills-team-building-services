@@ -49,13 +49,26 @@ const router = createRouter({
           component: () => import('../views/CalendarView.vue'),
           meta: { title: 'Calendar' }
         },
+        {
+          path: 'participants',
+          name: 'Participant',
+          component: () => import('../views/ParticipantView.vue'),
+          meta: { title: 'Participant' }
+        },
       ]
+    },
+    {
+      path: '/event-roster/:id',
+      name: 'Event Roster',
+      component: () => import('../views/EventRosterView.vue'),
+      meta: { title: 'Event Roster' }
     },
     {
       path: '/:pathMatch(.*)*',
       name: '404 Not Found',
       component: () => import('../components/NotFound.vue'),
-      meta: { title: '404 Not Found' }
+      meta: { title: '404 Not Found', requiresAuth: false }
+      
     },
   ],
 })

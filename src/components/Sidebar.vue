@@ -78,6 +78,11 @@
           <el-icon><Notebook /></el-icon>
           <template #title>Services</template>
         </el-menu-item>
+
+        <el-menu-item index="/admin/participants">
+          <el-icon><User /></el-icon>
+          <template #title>Participants</template>
+        </el-menu-item>
       </el-menu>
     </el-aside>
   </div>

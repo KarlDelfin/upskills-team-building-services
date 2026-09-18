@@ -101,7 +101,7 @@
           <div>
             <p>&copy; {{ currentYear }} <mark>Upskills Team Building Services</mark> · Cebu, Philippines</p>
             <p>
-              <a class="privacy_policy" :href="isHomePage ? '/privacy-policy' : ''"> Privacy Policy </a>
+              <a class="privacy_policy" :href="isPrivacyPolicy ? '' : '/privacy-policy'"> Privacy Policy </a>
             </p>
           </div>
           <nav>
@@ -177,6 +177,9 @@ export default {
     },
     isHomePage() {
       return this.$route.path === '/';
+    },
+    isPrivacyPolicy() {
+      return this.$route.path === '/privacy-policy';
     },
    
     currentYear() {

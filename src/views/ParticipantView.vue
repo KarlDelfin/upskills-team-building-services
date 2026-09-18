@@ -39,21 +39,37 @@
       v-loading="loading"
       element-loading-text="Loading events..."
     >
-      <el-table-column prop="id" label="Client Name" min-width="220" show-overflow-tooltip>
+      <el-table-column prop="fullName" label="Client Name" min-width="200" show-overflow-tooltip>
         <template #default="scope">
           <span class="!font-semibold !text-slate-800">{{ scope.row.fullName }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="eventDate" label="Event Date" width="180">
+      <el-table-column prop="eventDate" label="Event Date" min-width="200">
         <template #default="scope">
           <span>{{ scope.row.eventDate }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="Operations" width="280" fixed="right" align="center">
+      <el-table-column prop="eventLocation" label="Location" min-width="200" show-overflow-tooltip>
         <template #default="scope">
-          <div class="!flex !items-center !justify-center !gap-2">
+          <span class="!text-slate-600">{{ scope.row.eventLocation || 'Not Set' }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Operations" width="320" fixed="right" align="center">
+        <template #default="scope">
+          <div class="!flex !items-center !justify-center">
+            <!-- Edit Event Button -->
+            <el-button
+              size="small"
+              type="warning"
+              plain
+              @click="openEditDialog(scope.row)"
+            >
+              <el-icon class="!mr-1"><Edit /></el-icon> Edit
+            </el-button>
+
             <!-- View / Generate Certificates -->
             <el-button
               size="small"
@@ -91,10 +107,37 @@
       />
     </div>
 
+    <!-- EDIT EVENT DIALOG -->
+    <el-dialog v-model="editDialogVisible" title="Edit Event Details" width="500px">
+      <el-form label-position="top">
+        <el-form-item label="Event Date">
+          <el-date-picker
+            v-model="editForm.eventDate"
+            type="date"
+            placeholder="Select date"
+            class="!w-full"
+            value-format="YYYY-MM-DD"
+          />
+        </el-form-item>
+        <el-form-item label="Event Location / Venue Name">
+          <el-input
+            v-model="editForm.eventLocation"
+            placeholder="e.g. Waterfront Cebu City Hotel / Zoom"
+          />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="editDialogVisible = false">Cancel</el-button>
+        <el-button type="primary" :loading="savingEvent" @click="saveEventChanges">
+          Save Changes
+        </el-button>
+      </template>
+    </el-dialog>
+
     <!-- DRAWER -->
     <el-drawer
       v-model="drawerVisible"
-      :title="`Participants for Event: ${selectedEvent?.id || ''}`"
+      :title="`Participants for Event: ${selectedEvent?.fullName || selectedEvent?.id || ''}`"
       size="50%"
       direction="rtl"
     >
@@ -110,7 +153,7 @@
             :disabled="participants.length === 0"
             @click="generateAllCertificates"
           >
-            <el-icon class="!mr-1"><Download /></el-icon> Generate All (ZIP)
+            <el-icon class="!mr-1"><Download /></el-icon> Generate Certifications (All)
           </el-button>
         </div>
 
@@ -125,18 +168,18 @@
             placeholder="Quick add participant email..."
             @keyup.enter="addQuickParticipant"
           />
-      
           <el-button type="primary" @click="addQuickParticipant">
             <el-icon><Plus /></el-icon>
           </el-button>
         </div>
+
         <el-empty v-if="participants.length === 0" description="No participants"/>
-        <el-table v-else :data="participants" v-loading="loadingParticipants" class="!flex-1 !rounded-lg !border" stripe>
+        <el-table v-else :data="participants" v-loading="loadingParticipants" class="!flex-1 !rounded-lg !border !border-gray-300" stripe>
           <el-table-column type="index" label="#" width="50" align="center" />
           <el-table-column prop="fullName" label="Participant Name" />
           <el-table-column prop="email" label="Email" min-width="140">
             <template #default="scope">
-              <span class="!text-xs !text-slate-400">{{ scope.row.email || 'None' }}</span>
+              <span class="!text-xs !text-slate-400"><a v-if="scope.row.email" :href="`mailto:${scope.row.email}`">{{ scope.row.email }}</a><span v-else>N/A</span></span>
             </template>
           </el-table-column>
           <el-table-column label="Action" width="100" align="center">
@@ -174,7 +217,7 @@
 
 <script lang="ts">
 import { defineComponent, markRaw } from 'vue'
-import { Search, Refresh, Plus, User, Link, Download } from '@element-plus/icons-vue'
+import { Search, Refresh, Plus, User, Link, Download, Edit } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { supabase } from '@/utils/supabaseClient'
 import debounce from 'lodash/debounce'
@@ -185,14 +228,18 @@ import JSZip from 'jszip'
 interface EventRecord {
   id: string
   eventDate: string
+  rawEventDate: string
   bookingId?: string
   dateTimeCreated?: string
+  eventLocation?: string
+  fullName?: string
 }
 
 interface ParticipantRecord {
   id: string
   eventId: string
   fullName: string
+  email?: string
 }
 
 export default defineComponent({
@@ -203,7 +250,8 @@ export default defineComponent({
     Plus: markRaw(Plus),
     User: markRaw(User),
     Link: markRaw(Link),
-    Download: markRaw(Download)
+    Download: markRaw(Download),
+    Edit: markRaw(Edit)
   },
   data() {
     return {
@@ -224,7 +272,14 @@ export default defineComponent({
       generatedLink: '',
       fullName: '',
       email: '',
-      participants: [] as ParticipantRecord[]
+      participants: [] as ParticipantRecord[],
+      editDialogVisible: false,
+      savingEvent: false,
+      editForm: {
+        id: '',
+        eventDate: '',
+        eventLocation: ''
+      }
     }
   },
   mounted() {
@@ -237,7 +292,7 @@ export default defineComponent({
       this.fetchEvents()
     }, 300),
 
-    /* FETCH EVENTS ONLY */
+    /* FETCH EVENTS */
     async fetchEvents() {
       try {
         this.loading = true
@@ -249,18 +304,19 @@ export default defineComponent({
         let query = supabase
           .from('Event')
           .select(`
-          id, 
-          eventDate, 
-          bookingId, 
-          dateTimeCreated,
-          Booking (
-            id,
-            fullName
-          )
+            id, 
+            eventDate, 
+            eventLocation,
+            bookingId, 
+            dateTimeCreated,
+            Booking (
+              id,
+              fullName
+            )
           `, { count: 'exact' })
 
         if (this.search && this.search.trim() !== '') {
-          query = query.or(`id.ilike.%${this.search}%,bookingId.ilike.%${this.search}%`)
+          query = query.or(`id.ilike.%${this.search}%,bookingId.ilike.%${this.search}%,eventLocation.ilike.%${this.search}%`)
         }
 
         query = query.order('eventDate', { ascending: false }).range(from, to)
@@ -271,11 +327,11 @@ export default defineComponent({
         this.events = (data || []).map((event: any) => ({
           id: event.id,
           bookingId: event.bookingId,
+          rawEventDate: event.eventDate,
           eventDate: event.eventDate ? moment(event.eventDate).format('LL') : 'N/A',
-          fullName: event.Booking.fullName
+          eventLocation: event.eventLocation || '',
+          fullName: event.Booking?.fullName || 'Client'
         }))
-
-        console.log(this.events)
 
         this.eventPagination.totalElements = count || 0
       } catch (error: any) {
@@ -283,6 +339,44 @@ export default defineComponent({
         ElMessage.error(error.message || 'Failed to load events.')
       } finally {
         this.loading = false
+      }
+    },
+
+    /* EDIT EVENT MODAL */
+    openEditDialog(event: EventRecord) {
+      this.selectedEvent = event
+      this.editForm = {
+        id: event.id,
+        eventDate: event.rawEventDate || '',
+        eventLocation: event.eventLocation || ''
+      }
+      this.editDialogVisible = true
+    },
+
+    async saveEventChanges() {
+      if (!this.editForm.id) return
+
+      try {
+        this.savingEvent = true
+
+        const { error } = await supabase
+          .from('Event')
+          .update({
+            eventDate: this.editForm.eventDate,
+            eventLocation: this.editForm.eventLocation.trim()
+          })
+          .eq('id', this.editForm.id)
+
+        if (error) throw error
+     
+        this.fetchEvents()
+        ElMessage.success('Event details updated successfully!')
+        this.editDialogVisible = false
+      } catch (err: any) {
+        console.error(err)
+        ElMessage.error(err.message || 'Failed to update event.')
+      } finally {
+        this.savingEvent = false
       }
     },
 
@@ -338,6 +432,7 @@ export default defineComponent({
         const payload = {
           eventId: this.selectedEvent.id,
           fullName: this.fullName.trim(),
+          email: this.email.trim() || null
         }
 
         const { data, error } = await supabase
@@ -349,6 +444,7 @@ export default defineComponent({
         if (data) this.participants.push(data[0] as ParticipantRecord)
 
         this.fullName = ''
+        this.email = ''
         ElMessage.success('Participant added!')
       } catch (err: any) {
         ElMessage.error(err.message || 'Could not add participant.')
@@ -378,46 +474,103 @@ export default defineComponent({
 
         for (const p of this.participants) {
           const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })
-          const width = doc.internal.pageSize.getWidth()
-          const height = doc.internal.pageSize.getHeight()
+          const width = doc.internal.pageSize.getWidth()   // 297 mm
+          const height = doc.internal.pageSize.getHeight() // 210 mm
+          const centerX = width / 2
 
-          // Border frame
+          // Outer primary border
           doc.setDrawColor(30, 41, 59)
-          doc.setLineWidth(1.5)
+          doc.setLineWidth(1.8)
           doc.rect(10, 10, width - 20, height - 20)
 
-          // Title
-          doc.setFont('helvetica', 'bold')
-          doc.setFontSize(26)
-          doc.setTextColor(30, 41, 59)
-          doc.text('CERTIFICATE OF PARTICIPATION', width / 2, 45, { align: 'center' })
+          // Inner thin pinstripe border
+          doc.setDrawColor(202, 138, 4)
+          doc.setLineWidth(0.6)
+          doc.rect(13, 13, width - 26, height - 26)
 
+          let currentY = 28
+
+          // Title
+          doc.setFont('times', 'bold')
+          doc.setFontSize(24)
+          doc.setTextColor(15, 23, 42)
+          doc.text('CERTIFICATE OF PARTICIPATION', centerX, currentY, { align: 'center' })
+
+          // Underline
+          doc.setDrawColor(202, 138, 4)
+          doc.setLineWidth(0.8)
+          doc.line(centerX - 55, currentY + 3, centerX + 55, currentY + 3)
+
+          // Presentation line
+          currentY += 15
           doc.setFont('helvetica', 'normal')
           doc.setFontSize(12)
           doc.setTextColor(100, 116, 139)
-          doc.text('This is proudly awarded to', width / 2, 65, { align: 'center' })
+          doc.text('This is presented to', centerX, currentY, { align: 'center' })
 
           // Name
-          doc.setFont('helvetica', 'bold')
-          doc.setFontSize(24)
-          doc.setTextColor(15, 23, 42)
-          doc.text(p.fullName.toUpperCase(), width / 2, 92, { align: 'center' })
-          doc.line(width / 2 - 50, 96, width / 2 + 50, 96)
+          currentY += 14
+          doc.setFont('times', 'bolditalic')
+          doc.setFontSize(26)
+          doc.setTextColor(180, 83, 9)
+          doc.text(p.fullName.toUpperCase(), centerX, currentY, { align: 'center' })
 
-          // Subtitle / Body
+          doc.setDrawColor(226, 232, 240)
+          doc.setLineWidth(0.5)
+          doc.line(centerX - 60, currentY + 3, centerX + 60, currentY + 3)
+
+          // Citation body
+          currentY += 12
           doc.setFont('helvetica', 'normal')
-          doc.setFontSize(12)
+          doc.setFontSize(11)
           doc.setTextColor(71, 85, 105)
-          doc.text('for completing the program on', width / 2, 115, { align: 'center' })
-          doc.setFont('helvetica', 'bold')
-          doc.text(this.selectedEvent?.eventDate || 'Completion Date', width / 2, 125, { align: 'center' })
+          doc.text(
+            'in recognition of their active participation and successful completion of the',
+            centerX,
+            currentY,
+            { align: 'center' }
+          )
 
-          // Footer info
+          currentY += 9
+          doc.setFont('helvetica', 'bold')
+          doc.setFontSize(14)
+          doc.setTextColor(15, 23, 42)
+          doc.text('Upskills Team Building Services', centerX, currentY, { align: 'center' })
+
+          // Dynamic Date and Location citation lines
+          currentY += 8
           doc.setFont('helvetica', 'normal')
+          doc.setFontSize(10.5)
+          doc.setTextColor(71, 85, 105)
+
+          const eventDateStr = this.selectedEvent?.eventDate !== 'N/A' && this.selectedEvent?.eventDate
+            ? this.selectedEvent.eventDate
+            : moment().format('MMMM DD, YYYY')
+          const eventVenueStr = this.selectedEvent?.eventLocation?.trim() || 'Specified Venue'
+
+          const line1 = `Held on ${eventDateStr} at ${eventVenueStr}, organized to foster`
+          const line2 = `collaboration, strengthen leadership, and drive organizational excellence.`
+
+          doc.text(line1, centerX, currentY, { align: 'center' })
+          doc.text(line2, centerX, currentY + 5.5, { align: 'center' })
+
+          // Signature block
+          const sigLineY = 168
+          const rightSigCenterX = width - 65
+
+          doc.setDrawColor(148, 163, 184)
+          doc.setLineWidth(0.5)
+          doc.line(rightSigCenterX - 35, sigLineY, rightSigCenterX + 35, sigLineY)
+          doc.setFont('helvetica', 'bold')
           doc.setFontSize(10)
-          doc.text(`Issued on: ${moment().format('YYYY-MM-DD')}`, 25, 175)
-          doc.text('Authorized Facilitator', width - 65, 175)
-          doc.line(width - 70, 170, width - 20, 170)
+          doc.setTextColor(30, 41, 59)
+          doc.text('Myrene M. Camingawan', rightSigCenterX, sigLineY + 6, { align: 'center' })
+
+          doc.setFont('helvetica', 'normal')
+          doc.setFontSize(9)
+          doc.setTextColor(100, 116, 139)
+          doc.text('Facilitator', rightSigCenterX, sigLineY + 11, { align: 'center' })
+          doc.text('Upskills Team Building Services', rightSigCenterX, sigLineY + 16, { align: 'center' })
 
           const blob = doc.output('blob')
           zip.file(`${p.fullName.replace(/\s+/g, '_')}_Certificate.pdf`, blob)

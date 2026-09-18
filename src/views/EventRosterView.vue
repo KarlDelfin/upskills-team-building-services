@@ -197,3 +197,7 @@ export default {
     },
 }
 </script>
+
+<style>
+.banner figure img { display: none; }
+</style>

@@ -71,7 +71,7 @@ export default {
           end: 'monthCustom,weekCustom,dayCustom,listCustom'
         },
         customButtons: {
-          todayCustom: { text: 'today', click: () => vm.handleTodayClick() },
+          todayCustom: { text: 'Today', click: () => vm.handleTodayClick() },
           prevCustom: { text: '«', click: () => vm.handlePrevClick() },
           nextCustom: { text: '»', click: () => vm.handleNextClick() },
           refreshCustom: { text: '⟲ Refresh', click: () => vm.handleRefreshClick() },

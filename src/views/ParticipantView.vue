@@ -1,9 +1,9 @@
 <template>
-  <el-card class="!shadow-sm !border-0 !rounded-xl !overflow-hidden">
+  <el-card class="shadow-sm border-0 rounded-xl overflow-hidden">
     <template #header>
       <div class="!flex !flex-col sm:!flex-row !justify-between !items-start sm:!items-center !gap-4">
         <div>
-          <h2 class="!text-xl !font-bold !m-0">Certification Management</h2>
+          <h2 class="!text-xl !font-bold !m-0">Participant Management</h2>
           <p class="!text-xs !text-slate-500 !m-0 !mt-1">Manage attendees and generate completion certificates</p>
         </div>
       </div>

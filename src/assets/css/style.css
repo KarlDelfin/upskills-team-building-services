@@ -62,7 +62,7 @@ input[type=number] { -moz-appearance: textfield !important; appearance: textfiel
 .loader_status { font-size: 0.85rem; color: var(--defaultColor); margin: 0; font-weight: 500; }
 
 #header {position: relative;}
-    .header_con { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; position: fixed; width: 100%; z-index: 10; color: var(--priColor); background: var(--priColor); min-height: 90px}
+    .header_con { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; position: fixed; width: 100%; z-index: 10; color: var(--priColor); background: var(--priColor); min-height: 10vh}
     header p { mix-blend-mode: difference; font-family: var(--secFont); font-size: 1.1rem; letter-spacing: .02em; }
     header p span { display: block; font-family: var(--priFont); font-weight: 700; font-size: 1.25rem; letter-spacing: -.01em; }
     .comp_logo { width: 150px; background: var(--defaultColor); padding: 25px; position: absolute; border-radius: 0 0 50% 50%; top: -200px; display: flex; align-items: center; border: 1px solid #e1e1e1;}
@@ -108,7 +108,7 @@ input[type=number] { -moz-appearance: textfield !important; appearance: textfiel
     .middle_con p b { font-family: var(--secFont); font-style: italic; color: var(--secColor); font-weight: 600; }
 
     .middle_img { position: relative; }
-    .middle_img img { height: 80vh; object-fit: cover; width: 100%; object-position: 50% 0%; }
+    .middle_img img { height: 90vh; object-fit: cover; width: 100%; object-position: 50% 50%; }
 
 #services { background: var(--bodyColor); color: var(--priColor); padding: 6rem 2rem; }
     .services_con { max-width: var(--wrapper); margin: 0 auto; }

@@ -108,12 +108,12 @@ export function initHomeAnimations() {
 
     gsap.timeline({
         scrollTrigger: { trigger: '#banner', start: 'top top', end: 'bottom top', scrub: true },
-    }).to('.banner_con img', { objectPosition: '50% 20%' })
+    }).to('.banner_con img', { objectPosition: '50% -50%' })
 
     /* MIDDLE */
     gsap.timeline({
-        scrollTrigger: { trigger: '#middle', start: 'top bottom', end: 'bottom top', scrub: true },
-    }).to('.middle_img img', { objectPosition: '50% 50%' })
+        scrollTrigger: { trigger: '#middle', start: 'top top', end: 'bottom top', scrub: true, markers: true },
+    }).to('.middle_img img', { objectPosition: '50% -50%' })
 
     const middleTextsST = new SplitText(['.middle_con h2', '.middle_con p'], {
         type: 'lines',

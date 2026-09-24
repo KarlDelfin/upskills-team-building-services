@@ -2,7 +2,7 @@
     <!-- BANNER -->
     <div id="banner">
         <div class="banner_con">
-            <img src="../assets/image/banner.webp" alt="Facilitators leading a corporate bootcamp session in Cebu">
+            <img src="../assets/image/banner.webp" alt="Participants on a Team Building.">
             <div class="banner_info">
                 <p>Upskills Team<span>Building <mark>Services</mark></span></p>
             </div>
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="middle_img">
-            <img src="../assets/image/middle.webp" alt="Bootcamp participants collaborating during a session">
+            <img src="../assets/image/middle.webp" alt="Participants on a Team Building.">
         </div>
     </div>
 

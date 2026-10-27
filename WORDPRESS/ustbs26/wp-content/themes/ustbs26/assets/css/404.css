@@ -1,0 +1,44 @@
+:root {
+  --priColor: #ee6b12;
+  --priHover: #d95c0b;
+  --secColor: #fdb528;
+  --secHover: #f59e0b;
+  --thiColor: #ffffff;
+
+  --bodyColor: #1e293b;
+  --bodyMuted: #64748b;
+  --bgLight: #fffbf5;
+  --defaultColor: #ffffff;
+
+  --priFont: "Inter", sans-serif;
+  --secFont: "Lora", serif;
+  --defaultFont: 1rem;
+  --wrapper: 1400px;
+}
+
+.error-404-page {background-color:var(--bodyBg, #ffffff); color:var(--bodyColor, #0f172a); min-height:100vh; display:flex; align-items:center; justify-content:center; margin:0; padding:2rem 1.5rem; font-family:var(--priFont, "Inter", sans-serif);}
+.page_404_container {width:100%; max-width:620px; margin:0 auto;}
+.page_404_card {background:var(--surfaceLight, #fffaf5); border:1px solid rgba(238, 107, 18, 0.15); border-radius:20px; padding:3.5rem 2.5rem; text-align:center; box-shadow:0 12px 35px rgba(238, 107, 18, 0.08);}
+.page_404_logo {max-width:140px; margin:0 auto 2rem;}
+.page_404_logo img {width:100%; height:auto;}
+.badge_404 {display:inline-block; background:rgba(238, 107, 18, 0.12); color:var(--priColor, #ee6b12); font-weight:800; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.35rem 1rem; border-radius:999px; margin-bottom:1.25rem;}
+.title_404 {font-family:var(--secFont, "Lora", serif); font-size:clamp(2rem, 5vw, 2.5rem); font-weight:700; color:var(--bodyColor, #0f172a); line-height:1.2; margin:0 0 1rem;}
+.desc_404 {color:var(--bodyMuted, #475569); font-size:1.05rem; line-height:1.6; margin:0 auto 2.25rem; max-width:480px;}
+.page_404_search form {display:flex; align-items:center; justify-content:center; gap:0.5rem; max-width:440px; margin:0 auto 2.5rem;}
+.page_404_search input[type="search"], .page_404_search input[type="text"] {flex:1; padding:0.85rem 1.2rem; font-size:0.95rem; border:1px solid rgba(238, 107, 18, 0.25); border-radius:999px; outline:none; background:#ffffff; color:var(--bodyColor, #0f172a); transition:border-color 0.25s ease, box-shadow 0.25s ease;}
+.page_404_search input[type="search"]:focus, .page_404_search input[type="text"]:focus {border-color:var(--priColor, #ee6b12); box-shadow:0 0 0 3px rgba(238, 107, 18, 0.15);}
+.page_404_search input[type="submit"], .page_404_search button[type="submit"] {background:var(--priColor, #ee6b12); color:#ffffff; border:none; padding:0.85rem 1.4rem; font-size:0.9rem; font-weight:700; border-radius:999px; cursor:pointer; transition:background 0.2s ease, transform 0.2s ease;}
+.page_404_search input[type="submit"]:hover, .page_404_search button[type="submit"]:hover {background:var(--priDark, #c2410c); transform:translateY(-1px);}
+.page_404_actions {display:flex; justify-content:center; align-items:center; gap:1rem; flex-wrap:wrap;}
+.btn_home {background:var(--priColor, #ee6b12); color:#ffffff !important; font-weight:700; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.06em; padding:0.85rem 1.8rem; border-radius:999px; transition:all 0.2s ease; box-shadow:0 4px 12px rgba(238, 107, 18, 0.25); text-decoration: none;}
+.btn_home:hover {background:var(--bodyColor, #0f172a); transform:translateY(-2px);}
+.btn_contact {background:transparent; color:var(--bodyColor, #0f172a) !important; border:1px solid rgba(15, 23, 42, 0.2); font-weight:700; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.06em; padding:0.85rem 1.8rem; border-radius:999px; transition:all 0.2s ease; text-decoration: none;}
+.btn_contact:hover {border-color:var(--priColor, #ee6b12); color:var(--priColor, #ee6b12) !important; transform:translateY(-2px);}
+
+@media (max-width: 600px) {
+    .page_404_card {padding:2.5rem 1.5rem;}
+    .page_404_search form {flex-direction:column;}
+    .page_404_search input[type="search"], .page_404_search input[type="submit"] {width:100%;}
+    .page_404_actions {flex-direction:column; width:100%;}
+    .btn_home, .btn_contact {width:100%; text-align:center;}
+}

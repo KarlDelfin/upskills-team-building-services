@@ -56,39 +56,39 @@
 
   <!-- NON-HOME -->
   <?php if ( ! is_front_page() ) : ?>
+    <div class="main_con entry-content">
+      <?php if ( function_exists( 'yoast_breadcrumb' ) ) : ?>
+        <?php yoast_breadcrumb( '<p id="breadcrumbs">', '</p>' ); ?>
+      <?php endif; ?>
 
-    <?php if ( function_exists( 'yoast_breadcrumb' ) ) : ?>
-      <?php yoast_breadcrumb( '<p id="breadcrumbs">', '</p>' ); ?>
-    <?php endif; ?>
+      <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-    <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-
-      <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-        
-        <!-- PAGE HAS NO CONTENTS -->
-        <?php if ( empty( trim( get_the_content() ) ) && ! is_page( 'sitemap' ) ) : ?>
-          <p class="empty-notice">
-            <?php esc_html_e( 'We are still updating our website with content. Please check back next time.', 'ustbs26' ); ?>
-          </p>
-        <?php endif; ?>
-
-        <div class="entry-content">
-          <?php the_content(); ?>
-
-          <!-- SITEMAP PAGE -->
-          <?php if ( is_page( 'sitemap' ) ) : ?>
-            <ul class="sitemap col2">
-              <?php wp_list_pages( array( 'title_li' => '' ) ); ?>
-            </ul>
+        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+          
+          <!-- PAGE HAS NO CONTENTS -->
+          <?php if ( empty( trim( get_the_content() ) ) && ! is_page( 'sitemap' ) ) : ?>
+            <p class="empty-notice">
+              <?php esc_html_e( 'We are still updating our website with content. Please check back next time.', 'ustbs26' ); ?>
+            </p>
           <?php endif; ?>
 
-          <?php edit_post_link( __( 'Edit', 'ustbs26' ), '<span class="edit-link">', '</span>' ); ?>
-        </div>
+        
+            <?php the_content(); ?>
 
-      </article>
+            <!-- SITEMAP PAGE -->
+            <?php if ( is_page( 'sitemap' ) ) : ?>
+              <ul class="sitemap col2">
+                <?php wp_list_pages( array( 'title_li' => '' ) ); ?>
+              </ul>
+            <?php endif; ?>
 
-    <?php endwhile; endif; ?>
+            <?php edit_post_link( __( 'Edit', 'ustbs26' ), '<span class="edit-link">', '</span>' ); ?>
 
+        </article>
+
+      <?php endwhile; endif; ?>
+    </div>
+    
   <?php endif; ?>
 
   <?php if(is_front_page()) { get_template_part('template-parts/bottom' ); }?>

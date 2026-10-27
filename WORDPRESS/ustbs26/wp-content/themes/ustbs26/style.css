@@ -33,7 +33,7 @@ img { max-width: 100%; height: auto; display: block; }
   .loader_status { font-size: 0.9rem; color: #fff; font-weight: 500; }
 
 #header {position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 100; background: rgba(238, 107, 18, 0.94); backdrop-filter: blur(8px); box-shadow: 0 4px 20px rgba(238, 107, 18, 0.15); min-height: 80px;}
-  .header_con { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2.5rem; max-width: var(--wrapper); margin: 0 auto;}
+  .header_con { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; max-width: var(--wrapper); margin: 0 auto;}
   .comp_logo { width: 130px; display: flex; align-items: center; }
   .comp_logo img { width: 100%; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
 

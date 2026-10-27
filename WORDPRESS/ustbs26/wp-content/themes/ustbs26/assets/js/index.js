@@ -119,39 +119,41 @@
 
   /* ================= NAVIGATION SCROLLSPY ================= */
   function initNavScrollSpy() {
-    const navLinks = document.querySelectorAll('#nav ul li a, .nav_mobile nav a')
-    const sections = document.querySelectorAll('#banner, #middle, #about, #services, #packages, #our-works, #our-team, #testimonials, #contact-us')
-    if (!navLinks.length || !sections.length) return
+    if(window.location.pathname === "/") {
+      const navLinks = document.querySelectorAll('#nav ul li a, .nav_mobile nav a')
+      const sections = document.querySelectorAll('#banner, #middle, #about, #services, #packages, #our-works, #our-team, #testimonials, #contact-us')
+      if (!navLinks.length || !sections.length) return
 
-    const homeLink = navLinks[0]
+      const homeLink = navLinks[0]
 
-    function setActive(activeLink) {
-      navLinks.forEach((link) => link.classList.remove('active'))
-      if (activeLink) activeLink.classList.add('active')
-    }
+      function setActive(activeLink) {
+        navLinks.forEach((link) => link.classList.remove('active'))
+        if (activeLink) activeLink.classList.add('active')
+      }
 
-    setActive(homeLink)
+      setActive(homeLink)
 
-    sections.forEach((section) => {
-      const id = section.id
-      const targetLink = id === 'banner' 
-        ? homeLink 
-        : document.querySelector(`#nav a[href*="#${id}"], .nav_mobile a[href*="#${id}"]`)
+      sections.forEach((section) => {
+        const id = section.id
+        const targetLink = id === 'banner' 
+          ? homeLink 
+          : document.querySelector(`#nav a[href*="#${id}"], .nav_mobile a[href*="#${id}"]`)
 
-      if (!targetLink) return
+        if (!targetLink) return
 
-      ScrollTrigger.create({
-        trigger: section,
-        start: id === 'banner' ? 'top top' : 'top 40%',
-        end: 'bottom 40%',
-        onEnter: () => setActive(targetLink),
-        onEnterBack: () => setActive(targetLink)
+        ScrollTrigger.create({
+          trigger: section,
+          start: id === 'banner' ? 'top top' : 'top 40%',
+          end: 'bottom 40%',
+          onEnter: () => setActive(targetLink),
+          onEnterBack: () => setActive(targetLink)
+        })
       })
-    })
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY < 50) setActive(homeLink)
-    }, { passive: true })
+      window.addEventListener('scroll', () => {
+        if (window.scrollY < 50) setActive(homeLink)
+      }, { passive: true })
+    }
   }
 
   /* ================= 4. HOMEPAGE ANIMATIONS ================= */
@@ -164,7 +166,7 @@
       })
       
       gsap.to('#banner', {
-        yPercent: 18,
+        yPercent: 5,
         backgroundPosition: '0% -50%',
         ease: 'none',
         scrollTrigger: {
@@ -209,7 +211,8 @@
     // B. Middle / Welcome Section
     if (document.querySelector('.middle_img img')) {
       gsap.to('.middle_img img', {
-        yPercent: 20,
+        yPercent: 5,
+        objectPosition: '0% -10%',
         ease: 'none',
         scrollTrigger: {
           trigger: '#middle',
@@ -374,7 +377,7 @@
         duration: 0.7,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: '#team',
+          trigger: '#our-team',
           start: 'top 80%'
         }
       })
@@ -459,7 +462,7 @@
         stagger: 0.1,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: '#contact',
+          trigger: '#contact-us',
           start: 'top 82%'
         }
       })

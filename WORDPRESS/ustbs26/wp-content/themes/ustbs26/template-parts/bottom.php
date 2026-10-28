@@ -36,88 +36,123 @@
         </div>
     </div>
 
-    <div id="packages">
-        <div class="packages_con package1">
+   <section id="packages" class="packages_pin_section">
+  <div class="packages_wrapper wrapper">
+    
+    <!-- Left: Navigation list with animated fill bar -->
+    <div class="packages_nav">
+      <div class="packages_track">
+        <div class="packages_fill"></div>
+      </div>
+      <ul class="packages_menu">
+        <li class="package_nav_item active" data-index="0">
+          <span class="pkg_num">01</span>
+          <span class="pkg_label">ROOKIE</span>
+        </li>
+        <li class="package_nav_item" data-index="1">
+          <span class="pkg_num">02</span>
+          <span class="pkg_label">ALL-STAR</span>
+        </li>
+        <li class="package_nav_item" data-index="2">
+          <span class="pkg_num">03</span>
+          <span class="pkg_label">MVP</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right: Swapping package cards -->
+    <div class="packages_display">
+      
+      <!-- Slide 1: ROOKIE -->
+      <article class="package_slide package1">
         <div class="packages_inner">
-            <div class="package_header">
+          <div class="package_header">
+            <span class="package_badge">Starter Tier</span>
             <h2>ROOKIE</h2>
             <p>Core cohesion and team energizers</p>
-            </div>
-            <div class="package_details">
+          </div>
+          <div class="package_details">
             <ul class="feature_list">
-                <li>2 Certified Team Facilitators</li>
-                <li>Customized Event Banners</li>
-                <li>4 Color Team Flags (Elemental theme)</li>
-                <li>50 Color-Coded Headbands</li>
+              <li>2 Certified Team Facilitators</li>
+              <li>Customized Event Banners</li>
+              <li>4 Color Team Flags (Elemental theme)</li>
+              <li>50 Color-Coded Headbands</li>
             </ul>
             <ul class="feature_list">
-                <li>7ft × 10ft Tarpaulin Stage Backdrop</li>
-                <li>UHF Wireless Microphones & PA System</li>
-                <li>Full Activity Equipment & Materials</li>
-                <li>2–3 Minute Highlight Video (SDE)</li>
+              <li>7ft × 10ft Tarpaulin Stage Backdrop</li>
+              <li>UHF Wireless Microphones &amp; PA System</li>
+              <li>Full Activity Equipment &amp; Materials</li>
+              <li>2–3 Minute Highlight Video (SDE)</li>
             </ul>
-            </div>
-            <div class="perks_box">
+          </div>
+          <div class="perks_box">
             <div class="perk_item"><span>INCLUDED</span> 15 Recognition Medals</div>
             <div class="perk_item"><span>INCLUDED</span> 50 Verified Completion Certificates</div>
-            </div>
+          </div>
         </div>
-        </div>
+      </article>
 
-        <div class="packages_con package2">
+      <!-- Slide 2: ALL-STAR -->
+      <article class="package_slide package2">
         <div class="packages_inner">
-            <div class="package_header">
+          <div class="package_header">
+            <span class="package_badge">Most Popular</span>
             <h2>ALL-STAR</h2>
             <p>Elevated competition and enhanced digital production</p>
-            </div>
-            <div class="package_details">
+          </div>
+          <div class="package_details">
             <ul class="feature_list">
-                <li>2 Lead Facilitators + Floor Marshals</li>
-                <li class="hardware-highlight">7ft × 10ft Indoor/Outdoor LED Wall</li>
-                <li>Active Speaker System & Pro Sound Engineer</li>
-                <li>High-Engagement Collaboration Stations</li>
+              <li>2 Lead Facilitators + Floor Marshals</li>
+              <li class="hardware-highlight">7ft × 10ft Indoor/Outdoor LED Wall</li>
+              <li>Active Speaker System &amp; Pro Sound Engineer</li>
+              <li>High-Engagement Collaboration Stations</li>
             </ul>
             <ul class="feature_list">
-                <li>Full Equipment Logistics & Setup</li>
-                <li>2 Coordination Planning Sessions</li>
-                <li>High-Res Event Photo Coverage</li>
-                <li>Same-Day Edit Video Reel</li>
+              <li>Full Equipment Logistics &amp; Setup</li>
+              <li>2 Coordination Planning Sessions</li>
+              <li>High-Res Event Photo Coverage</li>
+              <li>Same-Day Edit Video Reel</li>
             </ul>
-            </div>
-            <div class="perks_box">
+          </div>
+          <div class="perks_box">
             <div class="perk_item"><span>INCLUDED</span> Complete Medal Ceremony</div>
             <div class="perk_item"><span>INCLUDED</span> 50 Branded Certificates</div>
-            </div>
+          </div>
         </div>
-        </div>
+      </article>
 
-        <div class="packages_con package3">
+      <!-- Slide 3: MVP -->
+      <article class="package_slide package3">
         <div class="packages_inner">
-            <div class="package_header">
+          <div class="package_header">
+            <span class="package_badge">Executive Tier</span>
             <h2>MVP</h2>
             <p>The complete end-to-end hotel retreat solution</p>
-            </div>
-            <div class="package_details">
+          </div>
+          <div class="package_details">
             <ul class="feature_list">
-                <li class="premium-highlight">Full Catering (AM/PM Snacks & Buffet Lunch)</li>
-                <li class="premium-highlight">Hotel Ballroom Venue at Bayfront Hotel Cebu</li>
-                <li>7ft × 10ft High-Definition LED Display</li>
-                <li>Senior Facilitation & Custom Leadership Modules</li>
+              <li class="premium-highlight">Full Catering (AM/PM Snacks &amp; Buffet Lunch)</li>
+              <li class="premium-highlight">Hotel Ballroom Venue at Bayfront Hotel Cebu</li>
+              <li>7ft × 10ft High-Definition LED Display</li>
+              <li>Senior Facilitation &amp; Custom Leadership Modules</li>
             </ul>
             <ul class="feature_list">
-                <li>Full Sound, Lighting & Staging Setup</li>
-                <li>Dedicated Photo & Video Production Team</li>
-                <li>3 Client Alignment Meetings</li>
-                <li>Individual Team Diagnostic Summary</li>
+              <li>Full Sound, Lighting &amp; Staging Setup</li>
+              <li>Dedicated Photo &amp; Video Production Team</li>
+              <li>3 Client Alignment Meetings</li>
+              <li>Individual Team Diagnostic Summary</li>
             </ul>
-            </div>
-            <div class="perks_box">
-            <div class="perk_item"><span>INCLUDED</span> Champion Trophies & Medals</div>
+          </div>
+          <div class="perks_box">
+            <div class="perk_item"><span>INCLUDED</span> Champion Trophies &amp; Medals</div>
             <div class="perk_item"><span>INCLUDED</span> Verified Certificates for all Attendees</div>
-            </div>
+          </div>
         </div>
-        </div>
+      </article>
+
     </div>
+  </div>
+</section>
 
     <div id="our-works">
         <div class="gallery_con">

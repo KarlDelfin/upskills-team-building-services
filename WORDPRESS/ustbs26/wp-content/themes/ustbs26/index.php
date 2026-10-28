@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js">
+
 <?php get_template_part('template-parts/head' ); ?>
 
 <body>
@@ -7,7 +8,7 @@
   <?php if(is_front_page()) { get_template_part('template-parts/banner' ); } ?>
   <?php if(is_front_page()) { get_template_part('template-parts/middle' ); } ?>
   
-  <!-- FRONT PAGE -->
+  <!-- HOME -->
   <?php if(is_front_page()) { ?>
     <main id="about">
       <div class="main_con">
@@ -93,5 +94,6 @@
 
   <?php if(is_front_page()) { get_template_part('template-parts/bottom' ); }?>
   <?php get_template_part('template-parts/footer' ); ?>
+  
 </body>
 </html>

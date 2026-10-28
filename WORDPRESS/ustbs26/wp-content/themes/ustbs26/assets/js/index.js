@@ -1,9 +1,13 @@
   const { gsap, ScrollTrigger, MotionPathPlugin, SplitText, ScrambleTextPlugin, DrawSVGPlugin } = window
   gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, ScrambleTextPlugin, SplitText, DrawSVGPlugin)
 
+  /* FLAIR CURSOR FOLLOWER */
+  
+
+
   /* ================= HIDE HEADER ON SCROLL DOWN, SHOW ON SCROLL UP ================= */
   function initHeaderScroll() {
-    if(window.location.pathname === "/") {
+    if(window.location.pathname === '/' || window.location.pathname === '/ustbs26/') {
       const header = document.querySelector('#header')
       if (!header) return
 
@@ -30,7 +34,6 @@
 
   /* ================= 1. SMOOTH SCROLL (LENIS) ================= */
   function initSmoothScroll() {
-
     try {
       /* LENIS */
       const lenis = new Lenis({
@@ -119,7 +122,7 @@
 
   /* ================= NAVIGATION SCROLLSPY ================= */
   function initNavScrollSpy() {
-    if(window.location.pathname === "/") {
+    if(window.location.pathname === '/' || window.location.pathname === '/ustbs26/') {
       const navLinks = document.querySelectorAll('#nav ul li a, .nav_mobile nav a')
       const sections = document.querySelectorAll('#banner, #middle, #about, #services, #packages, #our-works, #our-team, #testimonials, #contact-us')
       if (!navLinks.length || !sections.length) return
@@ -398,58 +401,99 @@
     }
   }
 
-  /* ================= 5. STACKING PACKAGES PINNING ================= */
-  function initSlidesPinning() {
-    const mm = gsap.matchMedia()
+ function initPackagesPinning() {
+  const pinSection = document.querySelector('.packages_pin_section')
+  if (!pinSection) return
 
-    // Desktop/Tablet Stacking Deck
-    mm.add('(min-width: 768px)', () => {
-      const panels = gsap.utils.toArray('.packages_con')
-      if (panels.length <= 1) return
+  const mm = gsap.matchMedia()
 
-      panels.forEach((panel, i) => {
-        if (i === panels.length - 1) return
+  // Desktop Pin & Timeline Scrub (min-width: 901px)
+  mm.add('(min-width: 901px)', () => {
+    const slides = gsap.utils.toArray('.package_slide')
+    const navItems = gsap.utils.toArray('.package_nav_item')
+    const fill = document.querySelector('.packages_fill')
+    const count = slides.length
 
-        ScrollTrigger.create({
-          trigger: panel,
-          start: 'top 10%',
-          endTrigger: '#packages',
-          end: 'bottom bottom',
-          pin: true,
-          pinSpacing: false,
-          scrub: true
-        })
+    if (count === 0) return
 
-        gsap.to(panel, {
-          scale: 0.94,
-          opacity: 0.35,
-          ease: 'power1.out',
-          scrollTrigger: {
-            trigger: panels[i + 1],
-            start: 'top 70%',
-            end: 'top 12%',
-            scrub: true
-          }
-        })
-      })
+    // 1. Initial State: show first card and set base fill position
+    gsap.set(slides[0], { autoAlpha: 1, y: 0 })
+    if (fill) {
+      gsap.set(fill, { scaleY: 1 / count, transformOrigin: 'top center' })
+    }
+
+    // 2. Main Timeline: Pin whole section while scrolling
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: pinSection,
+        start: 'top top',
+        end: () => `+=${count * 120}%`, // Gives smooth scroll length
+        pin: true,
+        scrub: 0.8,
+        anticipatePin: 1
+      }
     })
 
-    // Mobile Stagger Entrance
-    mm.add('(max-width: 767px)', () => {
-      gsap.utils.toArray('.packages_con').forEach((panel) => {
-        gsap.from(panel, {
-          y: 35,
-          opacity: 0,
-          duration: 0.7,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: panel,
-            start: 'top 82%'
-          }
-        })
-      })
+    // 3. Fill bar progression throughout the total duration
+    if (fill) {
+      tl.to(fill, {
+        scaleY: 1,
+        transformOrigin: 'top center',
+        ease: 'none',
+        duration: count
+      }, 0)
+    }
+
+    // 4. Stagger crossfade each slide and activate the corresponding nav item
+    slides.forEach((slide, i) => {
+      if (i === 0) return // First slide is already visible
+
+      const prevSlide = slides[i - 1]
+      const currentNav = navItems[i]
+      const prevNav = navItems[i - 1]
+      const stepTime = i
+
+      // Out with previous slide
+      tl.to(prevSlide, {
+        autoAlpha: 0,
+        y: -25,
+        duration: 0.4,
+        ease: 'power1.inOut'
+      }, stepTime)
+
+      // In with current slide
+      tl.fromTo(slide, {
+        autoAlpha: 0,
+        y: 25
+      }, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.4,
+        ease: 'power1.inOut'
+      }, stepTime)
+
+      // Swap active state on the left text list
+      tl.call(() => {
+        navItems.forEach((n) => n.classList.remove('active'))
+        currentNav.classList.add('active')
+      }, null, stepTime)
+
+      // Reverse trigger to reactivate previous item on scroll up
+      tl.call(() => {
+        navItems.forEach((n) => n.classList.remove('active'))
+        prevNav.classList.add('active')
+      }, null, stepTime - 0.05)
     })
-  }
+
+    // Small hold buffer at the end so the user can read the MVP card before unpinning
+    tl.to({}, { duration: 0.4 })
+  })
+}
+
+// Call on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  initPackagesPinning()
+})
 
   /* ================= 6. FOOTER ================= */
   function initFooterAnimations() {
@@ -479,6 +523,9 @@
         }
       })
     }
+
+
+    
   }
 
   /* ================= 7. MOBILE MENU ================= */
@@ -536,7 +583,7 @@
     initMobileMenu()
     initHeaderAnimations()
     initHomeAnimations()
-    initSlidesPinning()
+   /*  initSlidesPinning() */
     initFooterAnimations()
     initNavScrollSpy()
     initLoaderAnimation(() => {

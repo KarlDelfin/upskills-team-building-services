@@ -115,7 +115,7 @@ img { max-width: 100%; height: auto; display: block; }
     .package_slide {position:absolute; left:0; width:100%; transform:translateY(-50%); opacity:0; visibility:hidden; border-radius:20px; padding:3rem 2.5rem; box-shadow:0 20px 40px rgba(0, 0, 0, 0.35); border:1px solid rgba(255, 255, 255, 0.1);}
     .package1 {background:linear-gradient(135deg, rgba(238, 107, 18, 0.96), rgba(197, 83, 7, 0.98));}
     .package2 {background:linear-gradient(135deg, rgba(217, 92, 11, 0.96), rgba(146, 51, 0, 0.98));}
-    .package3 {background:linear-gradient(135deg, #1e293b, #090d16); border-color:rgba(238, 107, 18, 0.35);top: 44%;}
+    .package3 {background:linear-gradient(135deg, #1e293b, #090d16); border-color:rgba(238, 107, 18, 0.35);}
     .package_badge {display:inline-block; background:rgba(255, 255, 255, 0.2); color:#ffffff; font-size:0.75rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:999px; margin-bottom:0.75rem;}
     .packages_inner {width:100%; color:#ffffff;}
     .package_header h2 {font-size:clamp(2rem, 4vw, 3rem); font-family:var(--secFont, "Lora", serif); font-weight:800; color:#ffffff; margin:0 0 0.4rem;}

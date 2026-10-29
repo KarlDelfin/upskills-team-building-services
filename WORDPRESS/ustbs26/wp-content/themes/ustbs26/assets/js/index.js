@@ -213,9 +213,13 @@
 
     // B. Middle / Welcome Section
     if (document.querySelector('.middle_img img')) {
+      gsap.from('.middle_img img', {
+        objectPosition: '50% 50%'
+      })
+
       gsap.to('.middle_img img', {
         yPercent: 5,
-        objectPosition: '0% -10%',
+        objectPosition: '50% -50%',
         ease: 'none',
         scrollTrigger: {
           trigger: '#middle',

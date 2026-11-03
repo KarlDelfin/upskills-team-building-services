@@ -18,6 +18,9 @@
             <p><a href="<?php echo esc_url(home_url('/privacy-policy')); ?>">Privacy Policy</a></p>
         </div>
     </div>
+    
+    <div id="upskills-vue-chatbot"></div>
+
 </footer>
 
 <script src="<?php bloginfo('template_url'); ?>/assets/js/gsap/gsap.min.js"></script>
@@ -28,5 +31,6 @@
 <script src="<?php bloginfo('template_url'); ?>/assets/js/gsap/SplitText.min.js"></script>
 <script src="<?php bloginfo('template_url'); ?>/assets/js/gsap/lenis.min.js"></script>	
 <script src="<?php bloginfo('template_url'); ?>/assets/js/index.js"></script>
+<script type="module" src="<?php bloginfo('template_url'); ?>/assets/js/chatbot-bundle.js"></script>
 
 <?php wp_footer(); ?>

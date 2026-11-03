@@ -51,9 +51,9 @@ img { max-width: 100%; height: auto; display: block; }
     .banner_con img { height: 100%; width: 100%; object-fit: cover; opacity: 0.65; transform: scale(1.15); }
     
     .banner_info { position: absolute; left: 2rem; bottom: 0; z-index: 2; max-width: var(--wrapper); }
-    .banner_info p { font-family: var(--priFont); font-weight: 800; font-size: clamp(2.5rem, 6.5vw, 5.5rem); color: #fff; line-height: 1.05; letter-spacing: -0.02em; }
-    .banner_info p span { display: block; color: var(--secColor); }
-    .banner_info p mark { font-family: var(--secFont); color: #fff; font-style: italic; }
+    .banner_info h1 { font-family: var(--priFont); font-weight: 800; font-size: clamp(2.5rem, 6.5vw, 5.5rem); color: #fff; line-height: 1.05; letter-spacing: -0.02em; margin: 5rem 0;}
+    .banner_info h1 span { display: block; color: var(--secColor); }
+    .banner_info h1 mark { font-family: var(--secFont); color: #fff; font-style: italic; }
 
     .banner_scroll { position: absolute; right: 2.5rem; bottom: 3rem; color: #fff; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; display: flex; align-items: center; gap: 0.75rem; z-index: 2; font-weight: 700; }
     .banner_scroll::after { content: ''; width: 2px; height: 40px; background: var(--secColor); display: block; border-radius: 2px; }
@@ -71,8 +71,8 @@ img { max-width: 100%; height: auto; display: block; }
 #about { padding: 6rem 2rem; background: var(--bgLight); }
     .main_con { max-width: var(--wrapper); margin: 0 auto; display: flex; gap: 5rem; align-items: flex-start; }
     .founded_info { display: flex; flex-direction: column; gap: 2.5rem; position: sticky; top: 7rem; }
-    .founded_info section h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--priColor); font-weight: 800; margin-bottom: 0.35rem; }
-    .founded_info section p { font-family: var(--secFont); font-size: 1.2rem; font-weight: 600; color: var(--bodyColor); }
+    .founded_info h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--priColor); font-weight: 800; margin-bottom: 0.35rem; }
+    .founded_info p { font-family: var(--secFont); font-size: 1.2rem; font-weight: 600; color: var(--bodyColor); }
 
     .foundational_guiding { max-width: 780px; position: relative; }
     .pathway_line { position: absolute; left: -2.5rem; top: 0; height: 100%; width: 3px; }
@@ -112,7 +112,7 @@ img { max-width: 100%; height: auto; display: block; }
     .package_nav_item.active {color:#ffffff;}
     .package_nav_item.active .pkg_num {color:var(--priColor, #ee6b12);}
     .packages_display {flex:1; position:relative; min-height:580px;}
-    .package_slide {position:absolute; left:0; width:100%; transform:translateY(-50%); opacity:0; visibility:hidden; border-radius:20px; padding:3rem 2.5rem; box-shadow:0 20px 40px rgba(0, 0, 0, 0.35); border:1px solid rgba(255, 255, 255, 0.1);}
+    .package_slide {position:absolute; left:0; width:100%; transform:translateY(-50%); opacity:0; visibility:hidden; border-radius:20px; padding:3rem 2.5rem; box-shadow:0 20px 40px rgba(0, 0, 0, 0.35); border:1px solid rgba(255, 255, 255, 0.1); top:50%;}
     .package1 {background:linear-gradient(135deg, rgba(238, 107, 18, 0.96), rgba(197, 83, 7, 0.98));}
     .package2 {background:linear-gradient(135deg, rgba(217, 92, 11, 0.96), rgba(146, 51, 0, 0.98));}
     .package3 {background:linear-gradient(135deg, #1e293b, #090d16); border-color:rgba(238, 107, 18, 0.35);}
@@ -154,7 +154,7 @@ img { max-width: 100%; height: auto; display: block; }
     .testimonials_con { display: flex; align-items: center; justify-content: space-between; flex-direction: row; max-width: var(--wrapper, 1200px); width: 100%; margin: 0 auto; gap: 4rem; }
 
     .testmonials_info { width: 100%; max-width: 600px; }
-    .testmonials_info h2 { font-size: clamp(2rem, 5vw, 3.2rem); display: block; font-family: var(--secFont); color: var(--bodyColor); line-height: 1.15; letter-spacing: -0.02em; margin-top: 0.35rem; margin-bottom: 1.25rem; }
+    .testmonials_info h2 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight:600; display: block; font-family: var(--secFont); color: var(--bodyColor); line-height: 1.15; letter-spacing: -0.02em; margin-top: 0.35rem; margin-bottom: 1.25rem; }
     .testmonials_info h2 span { display: block; color: var(--priColor, #ee6b12); }
     .testmonials_info p { color: var(--bodyMuted, #475569); font-size: 1.1rem; line-height: 1.75; margin: 0; }
 

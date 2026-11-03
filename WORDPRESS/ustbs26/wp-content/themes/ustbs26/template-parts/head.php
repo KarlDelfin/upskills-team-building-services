@@ -6,6 +6,8 @@
     <meta name="keywords" content="team building cebu, corporate team building, facilitators cebu, corporate training philippines, upskills team building, outdoor team activities cebu">
     <title><?php wp_title('|', true, 'right'); ?></title>
     
+    <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/assets/css/chatbot-bundle.css">
     <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/style.css">
+
     <?php wp_head(); ?>
 </head>

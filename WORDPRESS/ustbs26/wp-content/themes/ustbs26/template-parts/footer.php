@@ -19,7 +19,13 @@
         </div>
     </div>
     
-    <div id="upskills-vue-chatbot"></div>
+    <div id="back_to_top">
+        <button>
+            <svg xmlns="http://w3.org" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m18 15-6-6-6 6"/>
+            </svg>
+        </button>
+    </div>
 
 </footer>
 
@@ -30,6 +36,7 @@
 <script src="<?php bloginfo('template_url'); ?>/assets/js/gsap/ScrollTrigger.min.js"></script>
 <script src="<?php bloginfo('template_url'); ?>/assets/js/gsap/SplitText.min.js"></script>
 <script src="<?php bloginfo('template_url'); ?>/assets/js/gsap/lenis.min.js"></script>	
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollToPlugin.min.js"></script>	
 <script src="<?php bloginfo('template_url'); ?>/assets/js/index.js"></script>
 <script type="module" src="<?php bloginfo('template_url'); ?>/assets/js/chatbot-bundle.js"></script>
 

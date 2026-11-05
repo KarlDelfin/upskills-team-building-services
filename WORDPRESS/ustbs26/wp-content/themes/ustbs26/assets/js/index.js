@@ -1,8 +1,50 @@
-  const { gsap, ScrollTrigger, MotionPathPlugin, SplitText, ScrambleTextPlugin, DrawSVGPlugin } = window
-  gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, ScrambleTextPlugin, SplitText, DrawSVGPlugin)
+  const { gsap, ScrollTrigger, MotionPathPlugin, SplitText, ScrambleTextPlugin, DrawSVGPlugin, ScrollToPlugin } = window
+  gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, ScrambleTextPlugin, SplitText, DrawSVGPlugin, ScrollToPlugin)
 
   /* FLAIR CURSOR FOLLOWER */
   
+    const backToTopBtn = document.querySelector("#back_to_top");
+
+        gsap.set(backToTopBtn, { autoAlpha: 0, scale: 0.8 });
+
+        ScrollTrigger.create({
+            trigger: '#banner',
+            start: "top top",
+            end: "bottom top",
+            onEnter: () => gsap.to(backToTopBtn, { autoAlpha: 1, scale: 1, duration: 0.3 }),
+            onLeaveBack: () => gsap.to(backToTopBtn, { autoAlpha: 0, scale: 0.8, duration: 0.3 })
+        });
+
+        backToTopBtn.addEventListener("click", () => {
+        gsap.to(window, {
+            duration: 1,
+            scrollTo: { y: 0 },
+            ease: "power2.easeInOut"
+        });
+    });
+
+
+    /* SCROLL TO SECTION */
+    document.querySelectorAll("#nav a").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            const targetId = btn.getAttribute("href");
+            
+            if (targetId.includes("#")) {
+            e.preventDefault();
+            
+            const hash = targetId.substring(targetId.indexOf("#"));
+            
+            gsap.to(window, {
+                duration: 1, 
+                scrollTo: {
+                y: hash, 
+                offsetY: 120
+                },
+                ease: "power2.out"
+            });
+            }
+        });
+    });
 
 
   /* ================= HIDE HEADER ON SCROLL DOWN, SHOW ON SCROLL UP ================= */
@@ -268,8 +310,8 @@
         stagger: 0.15,
         ease: 'back.out(1.1)',
         scrollTrigger: {
-          trigger: '.pathway',
-          start: 'top 78%'
+          trigger: '.bootcamp_card',
+          start: 'top 78%',
         }
       })
     }

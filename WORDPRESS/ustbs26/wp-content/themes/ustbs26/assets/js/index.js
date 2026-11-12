@@ -1,6 +1,7 @@
     const { gsap, ScrollTrigger, MotionPathPlugin, SplitText, ScrambleTextPlugin, DrawSVGPlugin, ScrollToPlugin } = window
     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, ScrambleTextPlugin, SplitText, DrawSVGPlugin, ScrollToPlugin)
 
+    /* BACK TO TOP */
     function initBackToTop() {
         const backToTopBtn = document.querySelector("#back_to_top");
 
@@ -23,7 +24,7 @@
         });
     }
 
-
+    /* NAVIGATION SPY */
     function initNavScrollSpy() {
         const navLinks = document.querySelectorAll(
             '#nav a[href*="#"], .nav_mobile nav a[href*="#"]'
@@ -91,214 +92,109 @@
         });
     }
 
-    function initHeaderScroll() {
-        if(window.location.pathname === '/' || window.location.pathname === '/ustbs26/') {
-        const header = document.querySelector('#header')
-        if (!header) return
-
-        const showAnim = gsap.from(header, {
-            yPercent: -100,
-            paused: true,
-            duration: 0.3,
-            ease: 'power2.out',
-        }).progress(1)
-
-        ScrollTrigger.create({
-            start: 'top top',
-            end: 'max',
-            onUpdate: (self) => {
-            if (self.scroll() < 80) {
-                showAnim.play()
-            } else {
-                self.direction === 1 ? showAnim.reverse() : showAnim.play()
-            }
-            }
-        })
-        }
-    }
-
-    /* ================= 1. SMOOTH SCROLL (LENIS) ================= */
+    /* SMOOTH SCROLL */
     function initSmoothScroll() {
-        try {
-        /* LENIS */
-        const lenis = new Lenis({
-            duration: 0.5,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-        });
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-        } catch (e) {
-        console.warn('Smooth scroll initialization failed:', e)
-        }
+          let lenis = new Lenis()
+          gsap.ticker.add((time) => { lenis.raf(time * 3000) })
+          gsap.ticker.lagSmoothing(0)
     }
 
-    /* ================= 2. PAGE LOADER ================= */
-    function initLoaderAnimation(onCompleteCallback) {
-        const loaderEl = document.getElementById('loader')
-        if (!loaderEl) {
-        if (typeof onCompleteCallback === 'function') onCompleteCallback()
-        return
-        }
-
-        const tl = gsap.timeline({
-        defaults: { ease: 'power2.inOut' }
-        })
-
-        tl.to('.loader_progress_fill', {
-        width: '100%',
-        duration: 1.1
-        })
-        .to(
-            '.loader_status',
-            {
-            duration: 0.5,
-            scrambleText: { text: 'Experience Ready', chars: 'UpskillsTeamBuilding' },
-            ease: 'none'
-            },
-            '-=0.3'
-        )
-        .to('.loader_con', {
-            y: -25,
-            opacity: 0,
-            duration: 0.35,
-            ease: 'power2.in'
-        })
-        .to('#loader', {
-                yPercent: -100,
-                duration: 0.75,
-                ease: 'expo.inOut',
-                onComplete: () => {
-                    loaderEl.style.setProperty('display', 'none', 'important')
-                    ScrollTrigger.refresh()
-                    initHeaderAnimations();
-                    if (typeof onCompleteCallback === 'function') onCompleteCallback()
-                }
-        })
-    }
-
-    /* ================= 3. HEADER & LOGO ================= */
-    function initHeaderAnimations() {
-        initSmoothScroll()
-        const navLinks = document.querySelectorAll('#nav ul li a')
-        if (navLinks.length > 0) {
-            gsap.from(navLinks, {
-                y: 75,
-                opacity: 0,
-            })
-            gsap.to(navLinks, {
-                y: 0,
-                opacity: 1,
-                duration: 0.7,
-                stagger: 0.1,
-                ease: 'back.out(1.7)',
-            })
-        }
-
-        const compLogo = document.querySelector('.comp_logo img')
-        if(compLogo) {
-            gsap.to(compLogo, {
-                y: 75,
-                opacity: 0,
-            })
-            gsap.to(compLogo, {
-                y: 0,
-                opacity: 1,
-                duration: 0.7,
-                stagger: 0.1,
-                ease: 'back.out(1.7)',
-            })
-        }
-    }
-
+      /* HEADER ANIMATION */
+      function initHeaderAnimations() {
+            const navLinks = document.querySelectorAll('#nav ul li a')
+            if (navLinks.length > 0) {
+                  let navLinksSplit = new SplitText(navLinks, { type: 'lines, words', linesClass: 'line' })
+                  gsap.from(navLinksSplit.words, {
+                        y: 100,
+                        opacity: 0,
+                        stagger: 0.1,
+                        ease: 'back.out',
+                  })
+            }
+      }
 
 
     /* ================= 4. HOMEPAGE ANIMATIONS ================= */
     function initHomeAnimations() {
         // A. Hero Banner Entrance & GPU-Parallax
         if (document.querySelector('#banner')) {
-
-        gsap.from('#banner', {
-            backgroundPosition: '0% 0%'
-        })
-        
-        gsap.to('#banner', {
-            yPercent: 5,
+            gsap.to('#banner', {
+                yPercent: 5,
                 backgroundPosition: '0% -50%',
                 ease: 'none',
                 scrollTrigger: {
-                trigger: '#banner',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true
+                    trigger: '#banner',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true
                 }
             })
         }
 
-        if (document.querySelector('.banner_info p')) {
-        if (typeof SplitText !== 'undefined') {
-            const bannerSplit = new SplitText('.banner_info p', { type: 'lines' })
-            gsap.from(bannerSplit.lines, {
-            y: 45,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out',
+        const bannerSplit = new SplitText('.banner_info h1', { type: 'lines, words', linesClass: 'line' })
+        gsap.from(bannerSplit.words, {
+            y: 200,
+            ease: 'back.out',
             stagger: 0.1
-            })
-        } else {
-            gsap.from('.banner_info p', {
-            y: 30,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out'
-            })
-        }
-        }
+        })
 
         if (document.querySelector('.banner_scroll')) {
-        gsap.from('.banner_scroll', {
-            opacity: 0,
-            y: -10,
-            duration: 0.8,
-            delay: 0.6,
-            ease: 'power2.out'
-        })
+            gsap.from('.banner_scroll', {
+                opacity: 0,
+                y: -10,
+                duration: 0.8,
+                delay: 0.6,
+                ease: 'power2.out'
+            })
         }
 
-        // B. Middle / Welcome Section
-        if (document.querySelector('.middle_img img')) {
-        gsap.from('.middle_img img', {
-            objectPosition: '50% 50%'
-        })
-
-        gsap.to('.middle_img img', {
-            yPercent: 5,
-            objectPosition: '50% -50%',
-            ease: 'none',
-            scrollTrigger: {
-            trigger: '#middle',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true
-            }
-        })
+        /* MIDDLE INFO */
+        const middleHeading = document.querySelector('.middle_info h2')
+        if (middleHeading) {
+            gsap.from(middleHeading, {
+                y: 30,
+                opacity: 0,
+                stagger: 0.2,
+                duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.middle_info h2',
+                    start: 'top 78%'
+                }
+            })
         }
 
-        const middleTexts = document.querySelectorAll('.middle_con h2, .middle_con p')
-        if (middleTexts.length > 0) {
-        gsap.from(middleTexts, {
-            y: 35,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-            trigger: '.middle_con',
-            start: 'top 78%'
-            }
-        })
+        const middleTexts = document.querySelectorAll('.middle_info p')
+        if (middleTexts) {
+            gsap.from(middleTexts, {
+                y: 30,
+                opacity: 0,
+                stagger: 0.2,
+                duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.middle_info p',
+                    start: 'top bottom'
+                }
+            })
+        }
+
+        /* MIDDLE IMAGE */
+        let middleConFig = document.querySelector('.middle_con figure')
+        if (middleConFig) {
+           
+            gsap.to(middleConFig, {
+                maxWidth: '25%',
+                clipPath: 'inset(24px)',
+                scrollTrigger: {
+                    trigger: '.middle_con figure',
+                    scrub: 1,
+                    pin: true,
+                    end: '+=1000',
+                    start: 'top center',
+                    end: 'bottom center',
+                }
+            })
         }
 
         // C. Services Section
@@ -310,8 +206,8 @@
             stagger: 0.12,
             ease: 'power3.out',
             scrollTrigger: {
-            trigger: '.services_head',
-            start: 'top 78%'
+                trigger: '.services_head',
+                start: 'top 78%'
             }
         })
         }
@@ -459,89 +355,110 @@
         }
     }
 
-    function initPackagesPinning() {
-        const pinSection = document.querySelector('.packages_pin_section')
-        if (!pinSection) return
+function initPackagesPinning() {
+    const pinSection = document.querySelector('.packages_pin_section');
+    if (!pinSection) return;
 
-        const mm = gsap.matchMedia()
+    const mm = gsap.matchMedia();
 
-        mm.add('(min-width: 901px)', () => {
-            const slides = gsap.utils.toArray('.package_slide')
-            const navItems = gsap.utils.toArray('.package_nav_item')
-            const fill = document.querySelector('.packages_fill')
-            const count = slides.length
+    mm.add('(min-width: 901px)', () => {
+        const slides = gsap.utils.toArray('.package_slide');
+        const navItems = gsap.utils.toArray('.package_nav_item');
+        const fill = document.querySelector('.packages_fill');
+        const count = slides.length;
 
-            if (count === 0) return
+        if (count === 0) return;
 
-            gsap.set(slides[0], { autoAlpha: 1, y: 0 })
-            if (fill) {
-            gsap.set(fill, { scaleY: 1 / count, transformOrigin: 'top center' })
-            }
+        // Initial setup for slides
+        slides.forEach((slide, i) => {
+            gsap.set(slide, {
+                autoAlpha: i === 0 ? 1 : 0,
+                y: i === 0 ? 0 : 30,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%'
+            });
+        });
 
-            const tl = gsap.timeline({
+        if (fill) {
+            gsap.set(fill, { scaleY: 1 / count, transformOrigin: 'top center' });
+        }
+
+        // Create smooth timeline with ScrollTrigger
+        const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: pinSection,
                 start: 'top top',
-                end: () => `+=${count * 120}%`, 
+                end: () => `+=${window.innerHeight * count * 0.8}`, // Smooth scroll distance
                 pin: true,
-                scrub: 0.8,
-                anticipatePin: 1
+                scrub: 0.6, // Smooth scrubbing feel
+                anticipatePin: 1,
+                onUpdate: (self) => {
+                    const progress = self.progress;
+                    // Determine current active slide index based on scroll progress
+                    const activeIndex = Math.min(Math.floor(progress * count), count - 1);
+
+                    // Update nav active classes smoothly in both directions
+                    navItems.forEach((item, idx) => {
+                        if (idx === activeIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    });
+
+                    // Update fill bar scale
+                    if (fill) {
+                        gsap.set(fill, { scaleY: Math.max(progress, 1 / count) });
+                    }
+                }
             }
-            })
+        });
 
-            if (fill) {
-            tl.to(fill, {
-                scaleY: 1,
-                transformOrigin: 'top center',
-                ease: 'none',
-                duration: count
-            }, 0)
+        // Slide transition animations
+        slides.forEach((slide, i) => {
+            if (i === 0) {
+                // Fade out first slide as we scroll into the second
+                tl.to(slide, {
+                    autoAlpha: 0,
+                    y: -30,
+                    ease: 'power1.inOut',
+                    duration: 0.5
+                }, 0.3);
+            } else {
+                const enterTime = i - 0.4;
+                const exitTime = i + 0.4;
+
+                // Fade in current slide
+                tl.fromTo(slide, {
+                    autoAlpha: 0,
+                    y: 30
+                }, {
+                    autoAlpha: 1,
+                    y: 0,
+                    ease: 'power1.out',
+                    duration: 0.5
+                }, enterTime);
+
+                // Fade out if there is a next slide
+                if (i < count - 1) {
+                    tl.to(slide, {
+                        autoAlpha: 0,
+                        y: -30,
+                        ease: 'power1.in',
+                        duration: 0.5
+                    }, exitTime);
+                }
             }
+        });
+    });
+}
 
-            slides.forEach((slide, i) => {
-            if (i === 0) return 
-
-            const prevSlide = slides[i - 1]
-            const currentNav = navItems[i]
-            const prevNav = navItems[i - 1]
-            const stepTime = i
-
-            tl.to(prevSlide, {
-                autoAlpha: 0,
-                y: -25,
-                duration: 0.4,
-                ease: 'power1.inOut'
-            }, stepTime)
-
-            tl.fromTo(slide, {
-                autoAlpha: 0,
-                y: 25
-            }, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.4,
-                ease: 'power1.inOut'
-            }, stepTime)
-
-            tl.call(() => {
-                navItems.forEach((n) => n.classList.remove('active'))
-                currentNav.classList.add('active')
-            }, null, stepTime)
-
-            tl.call(() => {
-                navItems.forEach((n) => n.classList.remove('active'))
-                prevNav.classList.add('active')
-            }, null, stepTime - 0.05)
-            })
-
-            tl.to({}, { duration: 0.4 })
-        })
-    }
-
-    // Call on DOM ready
-    document.addEventListener('DOMContentLoaded', () => {
-        initPackagesPinning()
-    })
+// Call on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    initPackagesPinning();
+    });
 
     /* ================= 6. FOOTER ================= */
     function initFooterAnimations() {
@@ -622,18 +539,16 @@
         });
     }
 
-  /* ================= RUN ON DOM READY ================= */
-  document.addEventListener('DOMContentLoaded', () => {
-    initBackToTop();
-    initHeaderScroll()
-    initMobileMenu()
-    initHomeAnimations()
-    initFooterAnimations()
-    initNavScrollSpy();
-    initLoaderAnimation(() => {
-      ScrollTrigger.refresh()
+    /* ================= RUN ON DOM READY ================= */
+    document.addEventListener('DOMContentLoaded', () => {
+            initHeaderAnimations();
+            initSmoothScroll()
+            initHomeAnimations()
+            initBackToTop();
+            initMobileMenu()
+            initFooterAnimations()
+            initNavScrollSpy();
     })
-  })
 
   window.addEventListener('load', () => {
     ScrollTrigger.refresh()

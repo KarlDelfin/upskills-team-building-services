@@ -1,17 +1,17 @@
 <?php if(is_front_page()) { ?>
-    <div id="loader">
+  <!--   <div id="loader">
         <div class="loader_con">
             <div class="loader_progress_bar">
                 <div class="loader_progress_fill"></div>
             </div>
             <p class="loader_status">Loading experience...</p>
         </div>
-    </div>
+    </div> -->
 <?php } ?>
 
 <header id="header">
     <div class="header_con">
-        <div class="comp_logo">
+        <div class="main_logo">
             <a href="<?php echo esc_url(home_url('/')); ?>">
                 <img src="<?php bloginfo('template_url'); ?>/assets/images/logo.webp" alt="Upskills Team Building Services" />
             </a>

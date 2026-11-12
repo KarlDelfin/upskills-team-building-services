@@ -58,20 +58,20 @@
   <!-- NON-HOME -->
   <?php if ( ! is_front_page() ) : ?>
     <div class="main_con entry-content">
-      <?php if ( function_exists( 'yoast_breadcrumb' ) ) : ?>
-        <?php yoast_breadcrumb( '<p id="breadcrumbs">', '</p>' ); ?>
-      <?php endif; ?>
+        <?php if ( function_exists( 'yoast_breadcrumb' ) ) : ?>
+            <?php yoast_breadcrumb( '<p id="breadcrumbs">', '</p>' ); ?>
+        <?php endif; ?>
 
-      <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
           
-          <!-- PAGE HAS NO CONTENTS -->
-          <?php if ( empty( trim( get_the_content() ) ) && ! is_page( 'sitemap' ) ) : ?>
-            <p class="empty-notice">
-              <?php esc_html_e( 'We are still updating our website with content. Please check back next time.', 'ustbs26' ); ?>
-            </p>
-          <?php endif; ?>
+            <!-- PAGE HAS NO CONTENTS -->
+            <?php if ( empty( trim( get_the_content() ) ) && ! is_page( 'sitemap' ) ) : ?>
+                <p class="empty-notice">
+                <?php esc_html_e( 'We are still updating our website with content. Please check back next time.', 'ustbs26' ); ?>
+                </p>
+            <?php endif; ?>
 
         
             <?php the_content(); ?>
@@ -87,7 +87,7 @@
 
         </article>
 
-      <?php endwhile; endif; ?>
+        <?php endwhile; endif; ?>
     </div>
     
   <?php endif; ?>

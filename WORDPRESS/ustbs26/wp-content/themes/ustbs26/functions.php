@@ -14,7 +14,6 @@ function remove_wordpress_menus() {
     remove_submenu_page( 'tools.php', 'export-personal-data.php' );
     remove_submenu_page( 'tools.php', 'erase-personal-data.php' );
     remove_submenu_page( 'users.php', 'user-new.php' );
-    remove_submenu_page( 'users.php', 'users.php' );
 
     global $pagenow;
     $current_query = $_SERVER['QUERY_STRING'] ?? '';
@@ -28,8 +27,7 @@ function remove_wordpress_menus() {
         'export.php',
         'export-personal-data.php',
         'erase-personal-data.php',
-        'user-new.php',
-        'users.php'
+        'user-new.php'
     );
 
     $blocked_queries = array(
@@ -38,7 +36,10 @@ function remove_wordpress_menus() {
         'site-editor.php?path=/pattern'
     );
 
-    if ( in_array( $pagenow, $blocked_pages ) ) {
+    // Explicitly allow post_type=page so Pages dashboard works normally
+    $is_pages = ( isset( $_GET['post_type'] ) && $_GET['post_type'] === 'page' );
+
+    if ( ! $is_pages && in_array( $pagenow, $blocked_pages ) ) {
         wp_die( __( 'Access Denied: This screen has been disabled.', 'textdomain' ), '', array( 'response' => 403 ) );
     }
 
@@ -49,13 +50,3 @@ function remove_wordpress_menus() {
     }
 }
 add_action( 'admin_menu', 'remove_wordpress_menus', 999 );
-
-
-// RESTORE APPEARANCE > MENUS
-function my_custom_theme_setup() {
-    add_theme_support('menus');
-    register_nav_menus(array(
-        'primary' => __( 'Primary Menu', 'textdomain' ),
-    ));
-}
-add_action( 'after_setup_theme', 'my_custom_theme_setup' );

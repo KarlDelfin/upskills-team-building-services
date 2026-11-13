@@ -1,16 +1,14 @@
 <footer id="contact-us">
     <div class="footer_con">
         <div class="footer_cta">
-        <div>
-            <h2>Ready to build a more cohesive, high-performing team?</h2>
-            <ul>
-                <li>Email: <a href="mailto:hello.upskills@gmail.com">hello.upskills@gmail.com</a></li>
-                <li>Phone: <a href="tel:09610115585">0961-011-5585</a></li>
-            </ul>
-        </div>
-        <div>
-            <a class="footer_link" href="/booking"> Schedule Your Event </a>
-        </div>
+            <div class="footer_info">
+                <h2>Ready to build a more cohesive, high-performing team?</h2>
+                <ul>
+                    <li>Email: <a href="mailto:hello.upskills@gmail.com">hello.upskills@gmail.com</a></li>
+                    <li>Phone: <a href="tel:09610115585">0961-011-5585</a></li>
+                </ul>
+            </div>
+            <a class="btn" href="/booking"> Schedule Your Event </a>
         </div>
 
         <div class="footer_meta">

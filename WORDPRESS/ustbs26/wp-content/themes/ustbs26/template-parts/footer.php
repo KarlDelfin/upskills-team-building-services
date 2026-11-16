@@ -12,7 +12,7 @@
         </div>
 
         <div class="footer_meta">
-            <p>&copy; <?php echo date('Y'); ?> Upskills Team Building Services · Cebu, Philippines</p>
+            <p>&copy; <?php echo date('Y'); ?> Upskills Team Building · Cebu, Philippines</p>
             <p><a href="<?php echo esc_url(home_url('/privacy-policy')); ?>">Privacy Policy</a></p>
         </div>
     </div>

@@ -6,36 +6,34 @@
 <body>
     <?php get_template_part('template-parts/header' ); ?>
 
-    <?php if(is_front_page()) { 
-        get_template_part('template-parts/banner' );
-        get_template_part('template-parts/middle');
-        get_template_part('template-parts/main');
-    } ?>
+    <?php 
+        if(is_front_page()): 
+            get_template_part('template-parts/banner' );
+            get_template_part('template-parts/middle');
+            get_template_part('template-parts/main'); 
+        endif; 
+    ?>
 
   <!-- NON-HOME -->
   <?php if (!is_front_page()) : ?>
-    <main class="main_con entry-content">
+    <main class="entry-content">
         <?php if (function_exists( 'yoast_breadcrumb')) : ?>
             <?php yoast_breadcrumb( '<p id="breadcrumbs">', '</p>' ); ?>
-            <h1 class="page_title"><?php echo get_the_title(); ?></h1>
+            <div class="page_title">
+                <h1><?php echo get_the_title(); ?></h1>
+            </div>
         <?php endif; ?>
 
         <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                
-                <!-- PAGE HAS NO CONTENTS -->
                 <?php if (empty(trim(get_the_content())) && ! is_page('sitemap')) : ?>
                     <p class="empty-notice">
                     <?php esc_html_e( 'We are still updating our website with content. Please check back next time.', 'ustbs26' ); ?>
                     </p>
                 <?php endif; ?>
 
-            
                 <?php the_content(); ?>
-
-                <!-- SITEMAP PAGE -->
-                <?php if ( is_page( 'sitemap' ) ) : ?>
+                <?php if (is_page('sitemap')) : ?>
                     <ul class="sitemap col2">
                     <?php wp_list_pages( array( 'title_li' => '' ) ); ?>
                     </ul>

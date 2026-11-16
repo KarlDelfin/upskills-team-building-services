@@ -50,3 +50,11 @@ function remove_wordpress_menus() {
     }
 }
 add_action( 'admin_menu', 'remove_wordpress_menus', 999 );
+
+
+function my_theme_enable_classic_menus() {
+    register_nav_menus( array(
+        'primary' => __( 'Primary Menu', 'textdomain' ),
+    ) );
+}
+add_action( 'after_setup_theme', 'my_theme_enable_classic_menus' );

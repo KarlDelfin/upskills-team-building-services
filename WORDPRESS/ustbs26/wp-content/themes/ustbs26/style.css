@@ -30,6 +30,7 @@ h1 mark {color: var(--secColor); font-family: inherit; font-weight: inherit; }
 p mark { color: var(--secColor); font-family: inherit; font-weight: inherit; }
 .btn { display: inline-flex; align-items: center; gap: 12px; background: var(--secColor); color: var(--defaultColor); font-weight: 600; border-radius: 999px; padding: 18px 35px; font-size: 0.95rem; box-shadow: 0px 4px 14px rgba(0,0,0,0.15); text-transform: uppercase; letter-spacing: 1.5px;}
 .btn:hover { background: var(--priColor); transform: translateY(-3px); text-decoration: none !important;}
+.comp {color: var(--priColor)}
 
 #header { position: fixed; top: 0px; left: 0px; right: 0px; width: 100%; z-index: 1; mix-blend-mode: difference;}
     .header_con { display: flex; justify-content: space-between; align-items: center; padding: 15px; }
@@ -39,7 +40,7 @@ p mark { color: var(--secColor); font-family: inherit; font-weight: inherit; }
     .flair { position: fixed; opacity: 0; width: 50px; }
 
 #nav ul { display: flex; gap: 32px; list-style: none; margin: 0px; padding: 0px; text-align: center; }
-    #nav ul li a {font-size: 12px; display: block; font-weight: 700; color: var(--defaultColor); position: relative; padding-bottom: 4px; letter-spacing: 1.5px; text-transform: uppercase; }
+    #nav ul li a {font-size: 12px; display: block; font-weight: 500; color: var(--defaultColor); position: relative; padding-bottom: 4px; letter-spacing: 1.5px; text-transform: uppercase; }
     #nav ul li a::after { content: ''; position: absolute; left: 0px; bottom: 0px; width: 100%; height: 2px; background: var(--secColor); transform: scaleX(0); transform-origin: right; transition: transform 0.3s ease; }
     #nav ul li a:hover::after, #nav ul li a.active::after { transform: scaleX(1); transform-origin: left; }
     #nav ul li a:hover { color: var(--secColor); }
@@ -58,7 +59,7 @@ p mark { color: var(--secColor); font-family: inherit; font-weight: inherit; }
     .middle_con figure { max-width: 100%; position: relative; z-index: 2; height: unset !important;z-index: 0; position: relative;}
     .middle_con figure img {  object-fit: cover; }
 
-    .middle_info { margin: 0 auto 0 30%; position: relative; z-index: 1;}
+    .middle_info { margin: 0 auto 0 35%; }
     .middle_info h2 { font-size:1rem; font-family: var(--priFont); line-height: 1; color: var(--priColor); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px; }
     .middle_info h2 span { font-size: clamp(2rem, 4.5vw, 3.2rem); display: block; font-family: var(--secFont); font-weight: 600; color: var(--bodyColor); text-transform: none; margin-top: 6px;  letter-spacing: normal; }
     .middle_info p { max-width: 800px; font-size: var(--defaultFont); color: var(--muteColor); margin-top: 20px;   }
@@ -76,11 +77,12 @@ p mark { color: var(--secColor); font-family: inherit; font-weight: inherit; }
     .pathway_line { position: absolute; left: -40px; top: 0px; height: 100%; width: 3px; }
     .pathway_line path { fill: none; stroke: var(--secColor); stroke-width: 3px; stroke-dasharray: 6 8; }
 
-    .foundational_guiding > div { padding-bottom: 56px; }
-    .foundational_guiding h2 {  font-family: var(--secFont); font-size: clamp(1.8rem, 4vw, 2.2rem); font-weight: 600; color: var(--bodyColor); margin-bottom: 14px; position: relative; padding-left: 28px; }
+    .foundational_guiding div { padding-bottom: 56px; }
+    .foundational_guiding h2 { font-family: var(--secFont); font-size: clamp(1.8rem, 4vw, 2.2rem); font-weight: 600; color: var(--bodyColor); margin-bottom: 14px; position: relative; padding-left: 28px; }
     .foundational_guiding h2::before { content: ''; position: absolute; top: 50%; left: 0px; transform: translateY(-50%); width: 14px; height: 14px; border-radius: 50%; background: var(--priColor); }
+    .foundational_guiding p {color: var(--muteColor)}
 
-    .core_values ul li { margin-bottom: 16px; font-size: 1.05rem; padding-left: 24px; position: relative; list-style: none; }
+    .core_values ul li { margin-bottom: 16px; font-size: 1.05rem; padding-left: 24px; position: relative; list-style: none; color: var(--muteColor)}
     .core_values ul li::before { content: ''; position: absolute; left: 0px; top: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--secColor); }
     .core_values ul li b { color: var(--priColor);  }
 
@@ -134,7 +136,7 @@ p mark { color: var(--secColor); font-family: inherit; font-weight: inherit; }
     .gallery_con p {  color: var(--bodyColor); font-size: 4rem; font-family: var(--secFont); font-weight: 600;  z-index: 2; text-shadow: 0px 2px 10px rgba(255, 255, 255, 0.8); }
 
 /* OUR TEAM */
-#our-team { padding: 96px 32px; background: #1e293b; color: var(--defaultColor); }
+#our-team { padding: 96px 32px; background: #1e293b; color: var(--defaultColor); min-height: 80vh;}
     .team_con { max-width: var(--wrapper); margin: 0px auto; }
     .team_head h2 { font-size: 0.9rem;  color: var(--secColor); margin-bottom: 8px; letter-spacing: 1.5px; text-transform: uppercase; }
     .team_head h2 span {  font-size: clamp(2rem, 5vw, 3.2rem); display: block; font-family: var(--secFont); color: var(--defaultColor); margin-top: 6px; letter-spacing: normal; text-transform: none; }
@@ -157,14 +159,12 @@ p mark { color: var(--secColor); font-family: inherit; font-weight: inherit; }
     .testmonials_info p { color: var(--bodyColor); font-size: 1.1rem; margin: 0px; }
 
 /* FOOTER */
-#contact-us { margin: 0px auto 50px; background: linear-gradient(135deg, var(--priColor) 0%, #c2410c 100%); color: var(--defaultColor); padding: 80px 32px 40px; border-radius: 0px 0px 28px 28px; }
+#contact-us { margin: 0px auto 150px; background: linear-gradient(135deg, var(--priColor) 0%, #c2410c 100%); color: var(--defaultColor); padding: 80px 32px 40px; border-radius: 0px 0px 28px 28px; }
     .footer_con { max-width: var(--wrapper); margin: 0px auto; }
     .footer_cta { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 40px; padding-bottom: 56px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
     .footer_cta h2 {  font-family: var(--secFont); font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 600; max-width: 700px; }
     .footer_cta ul { list-style: none; margin: 24px 0px 0px; padding: 0px; display: flex; flex-direction: column; gap: 8px; font-size: 1.1rem; }
     .footer_cta ul li a:hover { text-decoration: underline; color: var(--secColor); }
-
-   
 
     .footer_meta { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 32px; font-size: 0.85rem; color: #ffedd5; }
     .footer_meta a:hover { text-decoration: underline; }

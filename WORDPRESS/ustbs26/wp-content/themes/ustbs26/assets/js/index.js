@@ -7,6 +7,7 @@ const {
   DrawSVGPlugin,
   ScrollToPlugin,
 } = window;
+
 gsap.registerPlugin(
   ScrollTrigger,
   MotionPathPlugin,
@@ -17,6 +18,15 @@ gsap.registerPlugin(
 );
 
 let mm = gsap.matchMedia();
+
+/* COMPANY NAME COLOR */
+document.querySelectorAll("main * :not(h1)").forEach((el) => {
+  if (el.closest(".woocommerce")) return;
+  el.innerHTML = el.innerHTML.replace(
+    /Upskills Team Building/gi,
+    "<mark class='comp'>$&</mark>",
+  );
+});
 
 /* BACK TO TOP */
 function initBackToTop() {
@@ -44,74 +54,50 @@ function initBackToTop() {
 }
 /* NAVIGATION SPY */
 function initNavScrollSpy() {
-  const navLinks = document.querySelectorAll(
-    '#nav a[href*="#"], .nav_mobile nav a[href*="#"]',
-  );
+  const navLinks = [...document.querySelectorAll("#nav a, .nav_mobile a")];
+  if (!navLinks.length) return;
 
-  const sections = document.querySelectorAll(
-    "#banner, #middle, #about, #services, #packages, #our-works, #our-team, #testimonials, #contact-us",
-  );
+  const getHash = (link) => new URL(link.href, location.origin).hash;
+  const hashes = [...new Set(navLinks.map(getHash).filter(Boolean))];
 
-  if (!navLinks.length || !sections.length) return;
-
-  const homeLink = navLinks[0];
-
-  // ACTIVE LINK
-  const setActive = (activeLink) => {
-    navLinks.forEach((link) =>
-      link.classList.toggle("active", link === activeLink),
-    );
+  const setActive = (targetHash = "") => {
+    navLinks.forEach((link) => {
+      link.classList.toggle("active", getHash(link) === targetHash);
+    });
   };
 
-  setActive(homeLink);
+  setActive();
 
-  // SMOOTH SCROLL
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
-      const hash = new URL(link.href).hash;
-      const target = hash && document.querySelector(hash);
+      const url = new URL(link.href, location.origin);
+      if (url.pathname !== location.pathname) return;
 
-      if (!target) return;
+      const target = url.hash ? document.querySelector(url.hash) : 0;
+      if (url.hash && !target) return;
 
       e.preventDefault();
-
+      setActive(url.hash);
       gsap.to(window, {
         duration: 1,
-        scrollTo: {
-          y: target,
-          offsetY: 120,
-        },
+        scrollTo: { y: target, offsetY: target ? 120 : 0 },
         ease: "power2.out",
       });
     });
   });
 
-  // SCROLLSPY
-  sections.forEach((section, i) => {
-    const targetLink =
-      i === 0
-        ? homeLink
-        : [...navLinks].find(
-            (link) => new URL(link.href).hash === `#${section.id}`,
-          );
-
-    if (!targetLink) return;
+  hashes.forEach((hash, index) => {
+    const section = document.querySelector(hash);
+    if (!section) return;
 
     ScrollTrigger.create({
       trigger: section,
-      start: i === 0 ? "top top" : "top 40%",
-      end: "bottom 40%",
-      onToggle: (self) => {
-        if (self.isActive) setActive(targetLink);
-      },
+      start: "top 60%",
+      end: "bottom 60%",
+      onEnter: () => setActive(hash),
+      onEnterBack: () => setActive(hash),
+      ...(index === 0 && { onLeaveBack: () => setActive() }),
     });
-  });
-
-  // RESET HOME LINK AT TOP
-  ScrollTrigger.create({
-    trigger: document.body,
-    start: "top -50px",
-    onLeaveBack: () => setActive(homeLink),
   });
 }
 
@@ -179,7 +165,7 @@ function initHomeAnimations() {
   }
 
   /* MIDDLE INFO */
-  const middleHeading = document.querySelector(".middle_info h2");
+  const middleHeading = document.querySelector(".middle_info");
   if (middleHeading) {
     gsap.from(middleHeading, {
       y: 30,
@@ -188,13 +174,13 @@ function initHomeAnimations() {
       duration: 0.8,
       ease: "power3.out",
       scrollTrigger: {
-        trigger: ".middle_info h2",
+        trigger: ".middle_info",
         start: "top 78%",
       },
     });
   }
 
-  const middleTexts = document.querySelectorAll(".middle_info p");
+  /*   const middleTexts = document.querySelectorAll(".middle_info p");
   if (middleTexts) {
     gsap.from(middleTexts, {
       y: 30,
@@ -208,13 +194,13 @@ function initHomeAnimations() {
       },
     });
   }
-
+ */
   /* MIDDLE IMAGE */
   let middleConFig = document.querySelector(".middle_con figure");
   if (middleConFig) {
     mm.add("(min-width: 1001px)", () => {
       gsap.to(middleConFig, {
-        maxWidth: "25%",
+        maxWidth: "30%",
         clipPath: "inset(24px)",
         scrollTrigger: {
           trigger: ".middle_con figure",
@@ -296,7 +282,7 @@ function initHomeAnimations() {
     });
   }
 
-  // E. Circular Rotating 3D Gallery
+  // GALLERY
   const galleryImages = gsap.utils.toArray(".gallery_con img");
   if (galleryImages.length > 0 && document.querySelector(".gallery_con")) {
     const galleryTL = gsap.timeline({
@@ -366,7 +352,22 @@ function initHomeAnimations() {
     );
   }
 
-  // F. Leadership Team
+  const testimonialsInfo = document.querySelector(".testmonials_info");
+  if (testimonialsInfo) {
+    gsap.from(testimonialsInfo, {
+      y: 30,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".testmonials_info",
+        start: "top 78%",
+      },
+    });
+  }
+
+  // OUR TEAM
   if (document.querySelector(".team_head")) {
     gsap.from(".team_head", {
       y: 30,
